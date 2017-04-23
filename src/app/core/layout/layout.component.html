@@ -1,3 +1,15 @@
-<p>
-  layout works!
-</p>
+<rackian-loading *ngIf="loading"></rackian-loading>
+
+<md-sidenav-container>
+    <md-sidenav #mobileMenu mode="over">
+        <rackian-mobile-bar></rackian-mobile-bar>
+    </md-sidenav>
+    <div class="root-container">
+        <rackian-main-bar [mobileMenu]="mobileMenu"></rackian-main-bar>
+        <main>
+            <rackian-actions-panel></rackian-actions-panel>
+            <rackian-main-panel></rackian-main-panel>
+            <rackian-info-panel></rackian-info-panel>
+        </main>
+    </div>
+</md-sidenav-container>
