@@ -10,3 +10,22 @@
 main {
     flex-grow: 1;
 }
+.root-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+rackian-main-menu {
+    z-index: 10;
+}
+rackian-info-panel {
+    z-index: 9;
+}
+.main-zone {
+    z-index: 9;
+}
+rackian-breadcums {
+}
+rackian-main-panel {
+    z-index: 8;
+}

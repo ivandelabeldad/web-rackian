@@ -1,12 +1,44 @@
-<md-toolbar color="primary">
-    <span class="title">Rackian Cloud</span>
-    <div class="links" fxHide.sm="true">
-        <button md-button>
-            Button
+<div class="root-container">
+    <md-toolbar color="primary">
+        <span class="title">Rackian Cloud</span>
+        <div class="links" fxHide.xs>
+            <button md-button>
+                <md-icon>file_upload</md-icon>
+                <span>Upload File</span>
+            </button>
+            <button md-button>
+                <md-icon>create_new_folder</md-icon>
+                <span>Create Folder</span>
+            </button>
+        </div>
+        <!--<md-input-container>-->
+            <!--<md-icon>search</md-icon>-->
+            <!--<input mdInput type="search" placeholder="">-->
+        <!--</md-input-container>-->
+        <div class="spacer"></div>
+
+        <button fxHide.xs md-icon-button>
+            <md-icon>account_circle</md-icon>
         </button>
-    </div>
-    <div class="spacer"></div>
-    <button fxHide.gt-sm="true" md-icon-button (click)="mobileMenu.toggle()">
-        <md-icon>menu</md-icon>
-    </button>
-</md-toolbar>
+
+        <!-- MOBILE MENU -->
+        <button fxHide.gt-xs md-icon-button [mdMenuTriggerFor]="mobileMenu">
+            <md-icon>more_vert</md-icon>
+        </button>
+
+        <md-menu #mobileMenu="mdMenu">
+            <button md-menu-item>
+                <md-icon>file_upload</md-icon>
+                <span>Upload File</span>
+            </button>
+            <button md-menu-item>
+                <md-icon>create_new_folder</md-icon>
+                <span>Create Folder</span>
+            </button>
+            <button md-menu-item>
+                <md-icon>account_circle</md-icon>
+                <span>Account</span>
+            </button>
+        </md-menu>
+    </md-toolbar>
+</div>

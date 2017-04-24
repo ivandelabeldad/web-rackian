@@ -7,10 +7,9 @@ import { MaterialModule } from './material/material.module';
 import { LoadingComponent } from './loading/loading.component';
 import { MainBarComponent } from './main-menu/main-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ActionsPanelComponent } from './actions-panel/actions-panel.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
 import { InfoPanelComponent } from './info-panel/info-panel.component';
-import { MobileBarComponent } from './mobile-menu/mobile-menu.component';
+import { BreadcumsComponent } from './breadcums/breadcums.component';
 
 
 @NgModule({
@@ -27,10 +26,9 @@ import { MobileBarComponent } from './mobile-menu/mobile-menu.component';
     LayoutComponent,
     LoadingComponent,
     MainBarComponent,
-    ActionsPanelComponent,
     MainPanelComponent,
     InfoPanelComponent,
-    MobileBarComponent,
+    BreadcumsComponent,
   ],
 })
 export class LayoutModule {

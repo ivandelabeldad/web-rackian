@@ -1,9 +1,17 @@
+.root-container {
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14),
+    0 1px 8px 0 rgba(0, 0, 0, .12),
+    0 3px 3px -2px rgba(0, 0, 0, .4);
+}
+
 .spacer {
     flex: 1 1 auto;
 }
+
 .title {
     margin-right: 10px;
 }
+
 .links {
     margin-bottom: -2px;
 }

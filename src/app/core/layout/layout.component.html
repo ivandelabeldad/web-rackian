@@ -1,15 +1,24 @@
 <rackian-loading *ngIf="loading"></rackian-loading>
-
-<md-sidenav-container>
-    <md-sidenav #mobileMenu mode="over">
-        <rackian-mobile-bar></rackian-mobile-bar>
-    </md-sidenav>
-    <div class="root-container">
-        <rackian-main-bar [mobileMenu]="mobileMenu"></rackian-main-bar>
-        <main>
-            <rackian-actions-panel></rackian-actions-panel>
+<div class="root-container">
+    <rackian-main-menu></rackian-main-menu>
+    <main>
+        <rackian-info-panel
+                fxHide.xs
+                fxFlex.sm="25"
+                fxFlex.md="25"
+                fxFlex.lg="20"
+                fxFlex.xl="15"
+                fxFlex.gt-xs="25">
+        </rackian-info-panel>
+        <div class="main-zone"
+             fxFlex.xs="100"
+             fxFlex.sm="75"
+             fxFlex.md="75"
+             fxFlex.lg="80"
+             fxFlex.xl="85"
+             fxFlex.gt-xs="75">
+            <rackian-breadcums></rackian-breadcums>
             <rackian-main-panel></rackian-main-panel>
-            <rackian-info-panel></rackian-info-panel>
-        </main>
-    </div>
-</md-sidenav-container>
+        </div>
+    </main>
+</div>

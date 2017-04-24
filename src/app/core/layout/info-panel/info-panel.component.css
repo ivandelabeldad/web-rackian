@@ -1,0 +1,25 @@
+.root-container {
+    height: 100%;
+    background-color: #eeeeee;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+.list {
+    margin: 15px 15px 0;
+    overflow: hidden;
+}
+.list-item {
+    margin: 0 0 15px;
+}
+.list-item .title {
+    margin-top: 3px;
+    font-weight: 500;
+    color: #212121;
+}
+.list-item .value {
+    margin-top: 5px;
+    color: #424242;
+    font-size: 13px;
+    word-wrap: break-word;
+}
