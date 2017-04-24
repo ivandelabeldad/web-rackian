@@ -1,2 +1,27 @@
 .root-container {
 }
+.headers {
+    font-size: 18px;
+    color: #424242;
+    font-weight: 400;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 2px 4px 6px rgba(0,0,0,0.22);
+}
+.headers .title-name, .headers .title-modified, .headers .title-size {
+    font-size: 18px;
+    color: #424242 !important;
+}
+md-list, md-nav-list {
+    padding: 0;
+}
+.title-modified, .title-size, .element-modified, .element-size {
+    text-align: center;
+}
+.element-name > * {
+    vertical-align: middle;
+}
+.element-name > md-icon {
+    margin-right: 6px;
+    color: #757575;
+}
