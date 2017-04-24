@@ -18,6 +18,11 @@ md-list, md-nav-list {
 .title-modified, .title-size, .element-modified, .element-size {
     text-align: center;
 }
+.element-name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 .element-name > * {
     vertical-align: middle;
 }
