@@ -23,9 +23,14 @@ rackian-info-panel {
 }
 .main-zone {
     z-index: 9;
+    display: flex;
+    flex-direction: column;
 }
 rackian-breadcums {
 }
 rackian-main-panel {
     z-index: 8;
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
 }

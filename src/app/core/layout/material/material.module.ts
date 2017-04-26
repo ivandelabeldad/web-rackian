@@ -8,7 +8,7 @@ import {
   MdProgressSpinnerModule,
   MdSliderModule,
   MdToolbarModule,
-  MdSidenavModule, MdInputModule, MdListModule,
+  MdSidenavModule, MdInputModule, MdListModule, MdRippleModule,
 } from '@angular/material';
 
 @NgModule({
@@ -24,6 +24,7 @@ import {
     MdSidenavModule,
     MdInputModule,
     MdListModule,
+    MdRippleModule,
   ],
 })
 export class MaterialModule {

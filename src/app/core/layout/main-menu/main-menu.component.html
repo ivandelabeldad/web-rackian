@@ -1,30 +1,45 @@
 <div class="root-container">
-    <md-toolbar color="primary">
-        <span class="title">Rackian Cloud</span>
-        <div class="links" fxHide.xs>
-            <button md-button>
+    <nav color="primary">
+        <div fxLayout="row"
+             fxFlex.xs="100"
+             fxFlex.sm="25"
+             fxFlex.md="25"
+             fxFlex.lg="20"
+             fxFlex.xl="15"
+             fxFlex.gt-xs="25">
+            <a fxFlex="100" md-menu-item class="title">
+                <span>Rackian</span>
+            </a>
+        </div>
+        <div fxLayout="row" fxHide.xs>
+            <a href="#" md-menu-item>
                 <md-icon>file_upload</md-icon>
                 <span>Upload File</span>
-            </button>
-            <button md-button>
+            </a>
+            <a href="#" md-menu-item>
                 <md-icon>create_new_folder</md-icon>
                 <span>Create Folder</span>
-            </button>
+            </a>
         </div>
-        <!--<md-input-container>-->
-            <!--<md-icon>search</md-icon>-->
-            <!--<input mdInput type="search" placeholder="">-->
-        <!--</md-input-container>-->
+
         <div class="spacer"></div>
 
-        <button fxHide.xs md-icon-button>
+        <a md-menu-item [mdMenuTriggerFor]="userMenu" fxHide.xs>
             <md-icon>account_circle</md-icon>
-        </button>
+            <span>Akimah</span>
+        </a>
+        <md-menu #userMenu="mdMenu">
+            <button md-menu-item>
+                <md-icon>exit_to_app</md-icon>
+                <span>Logout</span>
+            </button>
+        </md-menu>
 
-        <!-- MOBILE MENU -->
-        <button fxHide.gt-xs md-icon-button [mdMenuTriggerFor]="mobileMenu">
-            <md-icon>more_vert</md-icon>
-        </button>
+
+        <!--MOBILE MENU-->
+        <a class="mobile-menu" md-menu-item fxHide.gt-xs [mdMenuTriggerFor]="mobileMenu">
+            <md-icon style="margin: 0">more_vert</md-icon>
+        </a>
 
         <md-menu #mobileMenu="mdMenu">
             <button md-menu-item>
@@ -40,5 +55,5 @@
                 <span>Account</span>
             </button>
         </md-menu>
-    </md-toolbar>
+    </nav>
 </div>

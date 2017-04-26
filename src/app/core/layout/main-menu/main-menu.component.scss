@@ -1,0 +1,36 @@
+@import "src/assets/scss/variables";
+
+.root-container {
+    border-bottom: 1px solid rgba($primary-color-dark, 0.7);
+}
+.spacer {
+    flex: 1 1 auto;
+}
+.title {
+    text-align: center;
+    border-right: 1px solid rgba($primary-color-light, 0.5);
+    font-size: 24px;
+    font-weight: 300;
+}
+nav {
+    background-color: $primary-color;
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+a {
+    transition: 300ms;
+}
+a:hover, a:focus {
+    background-color: rgba($primary-color-light, 0.3) !important;
+}
+a span, a md-icon {
+    color: #eee !important;
+    z-index: 9999;
+    margin-right: 10px;
+}
+
+.mobile-menu {
+    position: absolute;
+    right:0;
+}
