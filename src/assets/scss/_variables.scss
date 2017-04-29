@@ -1,0 +1,13 @@
+$primary-color: #1e88e5;
+$primary-color-light: #82b1ff;
+$primary-color-dark: #0d47a1;
+
+$accent-color: #455a64;
+$accent-color-light: #78909c;
+$accent-color-dark: #263238;
+
+$warn-color: #f44336;
+$warn-color-light: #ff8a80;
+$warn-color-dark: #d50000;
+
+@import '../../../node_modules/@angular/material/_theming';
