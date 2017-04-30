@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedAuthenticationModule } from './shared-authentication/shared-authentication.module';
+import { SharedAuthenticationModule } from './authentication/authentication.module';
 
 
 @NgModule({

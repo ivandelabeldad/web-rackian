@@ -10,7 +10,7 @@ import { InfoPanelComponent } from './info-panel/info-panel.component';
 import { BreadcumsComponent } from './breadcums/breadcums.component';
 import { StorageComponent } from './storage/storage.component';
 import { LoginComponent } from './authentication/login/login.component';
-import { AuthenticatedGuard } from '../../shared/shared-authentication/AuthenticatedGuard';
+import { AuthenticatedGuard } from '../../shared/authentication/authenticated.guard';
 import { LoginModule } from './authentication/authentication.module';
 import { LayoutSharedModule } from './shared/layout-shared.module';
 import { LogoutComponent } from './authentication/logout/logout.component';

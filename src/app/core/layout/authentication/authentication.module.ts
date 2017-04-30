@@ -4,6 +4,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { LayoutSharedModule } from '../shared/layout-shared.module';
 import { LoginService } from './login/login.service';
 import { LogoutComponent } from './logout/logout.component';
+import { LogoutService } from './logout/logout.service';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { LogoutComponent } from './logout/logout.component';
   ],
   providers: [
     LoginService,
+    LogoutService,
   ],
 })
 export class LoginModule { }
