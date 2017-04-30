@@ -1,37 +1,36 @@
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutComponent } from './layout.component';
 import { SharedModule } from '../../shared/shared.module';
-import { MaterialModule } from './material/material.module';
 import { LoadingComponent } from './loading/loading.component';
 import { MainBarComponent } from './main-menu/main-menu.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
 import { InfoPanelComponent } from './info-panel/info-panel.component';
 import { BreadcumsComponent } from './breadcums/breadcums.component';
 import { StorageComponent } from './storage/storage.component';
-import { LoginComponent } from './login/login.component';
-import { AuthenticatedGuard } from '../../shared/AuthenticatedGuard';
+import { LoginComponent } from './authentication/login/login.component';
+import { AuthenticatedGuard } from '../../shared/shared-authentication/AuthenticatedGuard';
+import { LoginModule } from './authentication/authentication.module';
+import { LayoutSharedModule } from './shared/layout-shared.module';
+import { LogoutComponent } from './authentication/logout/logout.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'storage', pathMatch: 'full' },
-  { path: 'storage', component: StorageComponent, canActivate: [AuthenticatedGuard] },
-  { path: 'login', component: LoginComponent },
+  { path: 'storage', component: StorageComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
+  { path: 'logout', component: LogoutComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [
     SharedModule,
-    FlexLayoutModule,
-    MaterialModule,
-    BrowserAnimationsModule,
+    LayoutSharedModule,
+    LoginModule,
     RouterModule.forRoot(routes),
   ],
   exports: [
-    LayoutComponent,
     RouterModule,
   ],
   declarations: [
@@ -42,7 +41,6 @@ const routes: Routes = [
     InfoPanelComponent,
     BreadcumsComponent,
     StorageComponent,
-    LoginComponent,
   ],
 })
 export class LayoutModule {

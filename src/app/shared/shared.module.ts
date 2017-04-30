@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthenticatedUser } from './AuthenticatedUser';
-import { AuthenticatedGuard } from './AuthenticatedGuard';
+import { SharedAuthenticationModule } from './shared-authentication/shared-authentication.module';
 
 
 @NgModule({
   exports: [
     CommonModule,
+    SharedAuthenticationModule,
+  ],
+  imports: [
+    SharedAuthenticationModule,
   ],
   providers: [
-    AuthenticatedUser,
-    AuthenticatedGuard,
-  ]
+  ],
 })
 export class SharedModule { }

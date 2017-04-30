@@ -8,10 +8,20 @@ import { AuthenticatedUser } from './AuthenticatedUser';
 export class AuthenticatedGuard implements CanActivate {
   constructor(private router: Router, private authenticatedUser: AuthenticatedUser) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.authenticatedUser.exists()) {
-      this.router.navigate(['/login']);
+  public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    if (route.routeConfig.path === 'login') {
+      if (this.authenticatedUser.isLogged()) {
+        this.router.navigate(['']);
+        return false;
+      } else {
+        return true;
+      }
     }
-    return this.authenticatedUser.exists();
+    if (!this.authenticatedUser.isLogged()) {
+      this.router.navigate(['/login']);
+      return false;
+    } else {
+      return true;
+    }
   }
 }

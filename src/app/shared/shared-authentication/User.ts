@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 export class User {
   private id: string;
   private username: string;
+  private email: string;
   private firstName: string;
   private lastName: string;
   private token: string;
@@ -29,6 +30,14 @@ export class User {
 
   setUsername(username: string): void {
     this.username = username;
+  }
+
+  getEmail(): string {
+    return this.email;
+  }
+
+  setEmail(email: string): void {
+    this.email = email;
   }
 
   getFirstName(): string {

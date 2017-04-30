@@ -55,6 +55,9 @@ md-card-actions {
 .checkbox {
   margin: 1em auto;
 }
+.error {
+  color: $warn-color;
+}
 @media (max-width: 600px) {
   md-card-title {
     margin-top: 8px;

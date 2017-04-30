@@ -34,3 +34,7 @@ a span, a md-icon {
     position: absolute;
     right:0;
 }
+
+a[_ngcontent-c3]   span[_ngcontent-c3], a[_ngcontent-c3]   md-icon[_ngcontent-c3] {
+  margin-right: 0 !important;
+}

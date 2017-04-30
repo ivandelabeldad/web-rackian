@@ -12,11 +12,11 @@
             </a>
         </div>
         <div fxLayout="row" fxHide.xs>
-            <a href="#" md-menu-item>
+            <a md-menu-item>
                 <md-icon>file_upload</md-icon>
                 <span>Upload File</span>
             </a>
-            <a href="#" md-menu-item>
+            <a md-menu-item>
                 <md-icon>create_new_folder</md-icon>
                 <span>Create Folder</span>
             </a>
@@ -26,10 +26,10 @@
 
         <a md-menu-item [mdMenuTriggerFor]="userMenu" fxHide.xs>
             <md-icon>account_circle</md-icon>
-            <span>Akimah</span>
+            <!--<span>{{ authenticatedUser }}</span>-->
         </a>
-        <md-menu #userMenu="mdMenu">
-            <button md-menu-item>
+        <md-menu #userMenu="mdMenu" xPosition="before">
+            <button md-menu-item routerLink="/logout">
                 <md-icon>exit_to_app</md-icon>
                 <span>Logout</span>
             </button>
