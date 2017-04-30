@@ -1,0 +1,60 @@
+<div class="root-container">
+
+  <div class="background"></div>
+
+  <md-card>
+    <form action="">
+
+      <md-progress-bar
+        mode="indeterminate"
+        *ngIf="loading">
+      </md-progress-bar>
+      <md-progress-bar
+        mode="determinate"
+        value="100"
+        *ngIf="!loading">
+      </md-progress-bar>
+
+      <md-card-header>
+        <md-card-title>
+          Sign In
+        </md-card-title>
+        <md-card-subtitle *ngIf="!error">
+          to continue to Rackian Cloud
+        </md-card-subtitle>
+        <md-card-subtitle class="error" *ngIf="error">
+          Wrong Credentials
+        </md-card-subtitle>
+      </md-card-header>
+
+      <md-card-content>
+        <div>
+          <md-input-container>
+            <md-error></md-error>
+            <input mdInput placeholder="Username" [(ngModel)]="username" name="username"
+                   [disabled]="loading" required>
+          </md-input-container>
+        </div>
+        <div>
+          <md-input-container>
+            <md-error></md-error>
+            <input mdInput type="password" placeholder="Password" [(ngModel)]="password" name="password"
+                   [disabled]="loading" required>
+          </md-input-container>
+        </div>
+        <div class="checkbox">
+          <md-checkbox color="primary" [disabled]="loading" [checked]="remember">
+            Remember me
+          </md-checkbox>
+        </div>
+      </md-card-content>
+      <md-card-actions [ngClass]="{'card-border' : !loading}">
+        <button type="submit" md-button color="primary" (click)="login()">
+          LOGIN
+        </button>
+      </md-card-actions>
+
+    </form>
+  </md-card>
+
+</div>
