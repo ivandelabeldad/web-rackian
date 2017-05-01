@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../../shared/authentication/user';
+import { User } from '../../../../shared/authentication/user';
 
 @Component({
   selector: 'rackian-main-menu',
@@ -8,9 +8,12 @@ import { User } from '../../../shared/authentication/user';
 })
 export class MainBarComponent implements OnInit {
 
-  constructor(private user: User) { }
+  private user: User;
+
+  constructor(private userService: User) { }
 
   ngOnInit() {
+    this.user = this.userService;
   }
 
 }

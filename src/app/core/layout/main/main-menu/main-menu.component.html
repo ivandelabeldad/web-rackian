@@ -24,12 +24,12 @@
 
         <div class="spacer"></div>
 
-        <a md-menu-item [mdMenuTriggerFor]="userMenu" fxHide.xs>
-            <md-icon>account_circle</md-icon>
-            <!--<span>{{ authenticatedUser }}</span>-->
+        <a class="profile-menu" md-menu-item [mdMenuTriggerFor]="userMenu" fxHide.xs>
+          <span>{{ user.getUsername() | titlecase }}</span>
+          <md-icon>account_circle</md-icon>
         </a>
         <md-menu #userMenu="mdMenu" xPosition="before">
-            <button md-menu-item routerLink="/logout">
+            <button md-menu-item [routerLink]="['/logout']">
                 <md-icon>exit_to_app</md-icon>
                 <span>Logout</span>
             </button>

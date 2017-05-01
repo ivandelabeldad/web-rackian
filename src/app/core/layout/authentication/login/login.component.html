@@ -16,11 +16,14 @@
       </md-progress-bar>
 
       <md-card-header>
+        <md-card-title class="brand">
+          Rackian Cloud
+        </md-card-title>
         <md-card-title>
           Sign In
         </md-card-title>
         <md-card-subtitle *ngIf="!error">
-          to continue to Rackian Cloud
+          to continue to your Cloud
         </md-card-subtitle>
         <md-card-subtitle class="error" *ngIf="error">
           Wrong Credentials
@@ -49,8 +52,8 @@
         </div>
       </md-card-content>
       <md-card-actions [ngClass]="{'card-border' : !loading}">
-        <button type="submit" md-button color="primary" (click)="login()">
-          LOGIN
+        <button type="submit" [disabled]="loading" md-raised-button color="primary" (click)="login()">
+          NEXT
         </button>
       </md-card-actions>
 

@@ -1,0 +1,58 @@
+.root-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.resources-list {
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.headers {
+  font-size: 18px;
+  color: #424242;
+  font-weight: 400;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.22);
+  height: 40px;
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+
+.headers .title-name, .headers .title-modified, .headers .title-size {
+  font-size: 14px;
+  font-weight: 500;
+  color: #636363 !important;
+  display: flex;
+  align-items: center;
+}
+
+md-list, md-nav-list {
+  padding: 0;
+}
+
+.title-modified, .title-size, .element-modified, .element-size {
+  justify-content: center;
+  text-align: center;
+}
+
+.element-name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.element-name > * {
+  vertical-align: middle;
+}
+
+.element-name > md-icon {
+  margin-right: 6px;
+  color: #757575;
+}
+
+md-list-item span {
+  font-size: 14px !important;
+}
