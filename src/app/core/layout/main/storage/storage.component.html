@@ -1,5 +1,6 @@
 <div class="root-container">
   <rackian-info-panel
+    [selectedResource]='selectedResource'
     fxHide.xs
     fxFlex.sm="25"
     fxFlex.md="25"
@@ -15,6 +16,11 @@
        fxFlex.xl="85"
        fxFlex.gt-xs="75">
     <rackian-breadcums></rackian-breadcums>
-    <rackian-main-panel [files]="files" [folders]="folders"></rackian-main-panel>
+    <rackian-main-panel
+      [files]="files"
+      [folders]="folders"
+      [selectedResource]='selectedResource'
+      (onSelectResource)='onSelectResource($event)'>
+    </rackian-main-panel>
   </div>
 </div>

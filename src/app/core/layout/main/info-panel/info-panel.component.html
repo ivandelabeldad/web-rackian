@@ -1,62 +1,59 @@
 <div class="root-container">
-    <span>{{title}}</span>
     <div class="list">
-        <div class="list-item" fxLayout.sm="column">
+        <div *ngIf="selectedResource?.name" class="list-item" fxLayout.sm="column">
             <div class="title" fxFlex.gt-sm="50">
                 Name
             </div>
             <div class="value" fxFlex.gt-sm="50">
-                Call of Cthulhu
+                {{ selectedResource.name }}
             </div>
         </div>
-       <div class="list-item" fxLayout.sm="column">
+       <div *ngIf="selectedResource?.size" class="list-item" fxLayout.sm="column">
            <div class="title" fxFlex.gt-sm="50">
                Size
             </div>
            <div class="value" fxFlex.gt-sm="50">
-               432.45 KB
+               {{ selectedResource.size | fileSize }}
            </div>
         </div>
-       <div class="list-item" fxLayout.sm="column">
+       <div *ngIf="selectedResource?.mime_type" class="list-item" fxLayout.sm="column">
            <div class="title" fxFlex.gt-sm="50">
                Type
             </div>
            <div class="value" fxFlex.gt-sm="50">
-               Pdf
+               {{ selectedResource.mime_type }}
            </div>
         </div>
-       <div class="list-item" fxLayout.sm="column">
+       <div *ngIf="selectedResource?.created_at" class="list-item" fxLayout.sm="column">
            <div class="title" fxFlex.gt-sm="50">
                 Created
             </div>
            <div class="value" fxFlex.gt-sm="50">
-               2017-05-01 14:23
+               {{ selectedResource.created_at | date:'medium' }}
            </div>
         </div>
-       <div class="list-item" fxLayout.sm="column">
+       <div *ngIf="selectedResource?.updated_at" class="list-item" fxLayout.sm="column">
            <div class="title" fxFlex.gt-sm="50">
                Updated
             </div>
            <div class="value" fxFlex.gt-sm="50">
-               2017-05-01 14:23
+               {{ selectedResource.updated_at | date:'medium' }}
            </div>
         </div>
-       <div class="list-item" fxLayout.sm="column">
+       <div *ngIf="selectedResource?.parent_folder" class="list-item" fxLayout.sm="column">
            <div class="title" fxFlex.gt-sm="50">
                Location
            </div>
            <div class="value" fxFlex.gt-sm="50">
-               My Cloud
+               {{ selectedResource.parent_folder }}
            </div>
         </div>
-        <div class="list-item" fxLayout.sm="column">
+        <div *ngIf="selectedResource?.description" class="list-item" fxLayout.sm="column">
             <div class="title" fxFlex.gt-sm="50">
                 Description
             </div>
             <div class="value" fxFlex.gt-sm="50">
-                Short description
-                Short description
-                Short description
+                {{ selectedResource.description }}
             </div>
         </div>
     </div>

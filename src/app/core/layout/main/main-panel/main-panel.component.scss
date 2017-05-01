@@ -1,3 +1,5 @@
+@import 'src/assets/scss/variables';
+
 .root-container {
   display: flex;
   flex-direction: column;
@@ -55,4 +57,13 @@ md-list, md-nav-list {
 
 md-list-item span {
   font-size: 14px !important;
+}
+
+.active {
+  background-color: mat-color($mat-blue, 700) !important;
+  color: #fff !important;
+}
+
+.active md-icon {
+  color: #fff !important;
 }

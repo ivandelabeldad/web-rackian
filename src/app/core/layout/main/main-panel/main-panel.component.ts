@@ -1,7 +1,9 @@
 import { Inject, Input } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
 import { File } from '../resources/file';
 import { Folder } from '../resources/folder';
+
 
 @Component({
   selector: 'rackian-main-panel',
@@ -11,13 +13,22 @@ import { Folder } from '../resources/folder';
 export class MainPanelComponent implements OnInit {
 
   @Input()
-  private files: File[];
+  public files: File[];
   @Input()
-  private folders: Folder[];
+  public folders: Folder[];
+  @Input()
+  public selectedResource: File|Folder;
+  @Output()
+  public onSelectResource: EventEmitter<File|Folder> = new EventEmitter<File|Folder>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  selectResource(resource: File|Folder) {
+    this.selectedResource = resource;
+    this.onSelectResource.emit(this.selectedResource);
   }
 
 }
