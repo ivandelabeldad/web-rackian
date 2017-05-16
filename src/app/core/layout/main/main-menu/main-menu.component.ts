@@ -8,7 +8,7 @@ import { User } from '../../../../shared/authentication/user';
 })
 export class MainBarComponent implements OnInit {
 
-  private user: User;
+  user: User;
 
   constructor(private userService: User) { }
 
