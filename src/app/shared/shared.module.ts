@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedAuthenticationModule } from './authentication/authentication.module';
 import { FileSizePipe } from './file-size.pipe';
+import { HttpModule } from '@angular/http';
 
 
 @NgModule({
@@ -9,6 +10,7 @@ import { FileSizePipe } from './file-size.pipe';
     CommonModule,
     SharedAuthenticationModule,
     FileSizePipe,
+    HttpModule,
   ],
   imports: [
     SharedAuthenticationModule,
