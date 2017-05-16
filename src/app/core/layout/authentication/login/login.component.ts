@@ -28,11 +28,10 @@ export class LoginComponent implements OnInit {
       .subscribe(
         user => {
           this.loading = false;
-          this.router.navigate(['storage']);
+          this.router.navigate(['']);
         },
         err => {
           this.loading = false;
-          this.username = '';
           this.password = '';
           this.error = true;
         }

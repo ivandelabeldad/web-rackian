@@ -13,6 +13,8 @@ import { FileService } from '../resources/file.service';
 })
 export class StorageComponent implements OnInit {
 
+  // public resources: File[]|Folder[] = [];
+  public resources: any = [];
   public files: File[];
   public folders: Folder[];
   public selectedResource: File|Folder;
@@ -20,6 +22,9 @@ export class StorageComponent implements OnInit {
   constructor(private fileService: FileService, private folderService: FolderService) { }
 
   ngOnInit() {
+    this.resources.push(new File());
+    this.fileService.getFiles().subscribe(files => this.resources = [...this.resources, ...files]);
+    this.fileService.getFiles().subscribe(files => this.files = files);
     this.fileService.getFiles().subscribe(files => this.files = files);
     this.folderService.getFolders().subscribe(folders => this.folders = folders);
   }
