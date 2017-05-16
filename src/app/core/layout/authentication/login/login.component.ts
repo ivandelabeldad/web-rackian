@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  private loading = false;
-  private username = '';
-  private password = '';
-  private remember = false;
-  private error = false;
+  loading = false;
+  username = '';
+  password = '';
+  remember = false;
+  error = false;
 
   constructor(private loginService: LoginService, private router: Router) {
   }
@@ -28,11 +28,10 @@ export class LoginComponent implements OnInit {
       .subscribe(
         user => {
           this.loading = false;
-          this.router.navigate(['storage']);
+          this.router.navigate(['']);
         },
         err => {
           this.loading = false;
-          this.username = '';
           this.password = '';
           this.error = true;
         }

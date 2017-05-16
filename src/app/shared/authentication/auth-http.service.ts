@@ -30,8 +30,6 @@ export class AuthHttpService {
       return;
     }
     if (this.token.hasExpired()) {
-      this.user.clear();
-      this.token.clear();
       this.router.navigate(['/logout']);
     }
   }

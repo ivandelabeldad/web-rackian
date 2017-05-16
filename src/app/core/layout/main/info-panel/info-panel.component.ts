@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Folder } from '../resources/folder';
+import { File } from '../resources/file';
+
 
 @Component({
   selector: 'rackian-info-panel',
@@ -6,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./info-panel.component.scss']
 })
 export class InfoPanelComponent implements OnInit {
+
+  @Input()
+  public selectedResource: File|Folder;
 
   constructor() { }
 

@@ -40,6 +40,13 @@ md-progress-bar {
 md-card-title {
   font-size: 21px !important;
 }
+md-card-title.brand {
+  margin-top: 8px;
+  margin-bottom: 32px;
+  font-size: 18px !important;
+  font-weight: 500;
+  color: mat-color($mat-blue-grey, 800);
+}
 md-card-content {
   margin: auto 8px;
 }
@@ -49,8 +56,8 @@ md-card md-input-container {
   margin: 0.4em 0;
 }
 md-card-actions {
-  margin: 1em 0 -5px !important;
-  text-align: center;
+  margin: 1.5em 0 2em !important;
+  text-align: right;
 }
 .checkbox {
   margin: 1em auto;
@@ -61,5 +68,8 @@ md-card-actions {
 @media (max-width: 600px) {
   md-card-title {
     margin-top: 8px;
+  }
+  md-card-title.brand {
+    margin-top: 16px;
   }
 }

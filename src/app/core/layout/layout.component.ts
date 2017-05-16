@@ -7,7 +7,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 })
 export class LayoutComponent implements OnInit {
 
-  private loading = true;
+  loading = true;
 
   constructor(private router: Router) {
   }

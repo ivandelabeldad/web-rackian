@@ -3,7 +3,7 @@ import { LogoutService } from './logout.service';
 
 @Component({
   selector: 'rackian-logout',
-  template: '',
+  template: ' ',
 })
 export class LogoutComponent implements OnInit {
 
