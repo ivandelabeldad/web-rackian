@@ -10,3 +10,9 @@ handlers:
 - url: /(.*)
   static_files: dist/\1
   upload: dist/(.*)
+
+skip_files:
+  - ^node_modules$
+  - ^.idea$
+  - ^.vscode$
+  - ^.git$
