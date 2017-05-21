@@ -1,0 +1,54 @@
+.root-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+.content {
+  display: flex;
+  flex-direction: row;
+  min-height: 100%;
+  flex-grow: 1;
+}
+.root-container rackian-main-bar {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.main-zone {
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+}
+rackian-breadcums {
+}
+rackian-storage {
+  z-index: 8;
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+main {
+  flex-grow: 1;
+}
+rackian-main-menu {
+  z-index: 10;
+}
+rackian-info-panel {
+  z-index: 9;
+}
+.main-zone {
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+}
+rackian-breadcums {
+}
+rackian-main-panel {
+  z-index: 8;
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+}

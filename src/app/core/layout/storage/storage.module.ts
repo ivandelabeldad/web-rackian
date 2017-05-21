@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 
-import { MainComponent } from './main.component';
+import { StorageComponent } from './storage.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { LayoutSharedModule } from '../shared/layout-shared.module';
-import { StorageComponent } from './storage/storage.component';
 import { BreadcumsComponent } from './breadcums/breadcums.component';
 import { InfoPanelComponent } from './info-panel/info-panel.component';
 import { MainPanelComponent } from './main-panel/main-panel.component';
@@ -19,7 +18,7 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
   declarations: [
-    MainComponent,
+    StorageComponent,
     MainBarComponent,
     MainPanelComponent,
     InfoPanelComponent,
