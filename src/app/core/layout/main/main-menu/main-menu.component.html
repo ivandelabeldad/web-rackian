@@ -12,10 +12,11 @@
             </a>
         </div>
         <div fxLayout="row" fxHide.xs>
-            <a md-menu-item>
-                <md-icon>file_upload</md-icon>
-                <span>Upload File</span>
-            </a>
+            <input fxHide id="input-file-id" multiple type="file" (change)="fileUpload($event)">
+            <label md-menu-item for="input-file-id" class="md-menu-label">
+              <md-icon>file_upload</md-icon>
+              <span>Upload File</span>
+            </label>
             <a md-menu-item>
                 <md-icon>create_new_folder</md-icon>
                 <span>Create Folder</span>
