@@ -1,5 +1,8 @@
 <div class="root-container">
   <div class="breadcrumbs">
-    My Cloud
+    <span><a routerLink="/storage">My Cloud</a></span>
+    <span *ngFor="let folder of parentFolders">
+       <i class="material-icons">keyboard_arrow_right</i> <a routerLink='/storage/folder/{{folder.id}}'>{{ folder.name }}</a>
+    </span>
   </div>
 </div>

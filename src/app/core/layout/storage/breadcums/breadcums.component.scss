@@ -6,7 +6,35 @@
     height: 45px;
 }
 .breadcrumbs {
-    padding: 0 16px;
-    font-size: 18px;
-    font-weight: 300;
+  display: flex;
+  font-size: 18px;
+  font-weight: 300;
+  height: 100%;
+  overflow: hidden;
+  justify-content: flex-end;
+}
+
+.breadcrumbs * {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+a {
+  color: #616161;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
+}
+
+a:hover {
+  background: #EEEEEE;
+}
+
+.material-icons {
+  color: #616161;
+  vertical-align: middle;
+  font-size: 20px;
+  width: 14px;
 }

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { Folder } from '../resources/folder';
+import { FolderService } from '../resources/folder.service';
 
 @Component({
   selector: 'rackian-breadcums',
@@ -7,9 +11,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BreadcumsComponent implements OnInit {
 
-  constructor() { }
+  private parentFolders: Folder[];
+
+  constructor(private activatedRoute: ActivatedRoute, private folderService: FolderService) { }
 
   ngOnInit() {
+    this.generateBreadCrumbs();
+  }
+
+  generateBreadCrumbs() {
+    this.activatedRoute.url.subscribe(r => {
+      if (r[r.length - 1].path === 'storage') {
+        this.parentFolders = [];
+      } else {
+        const folder = new Folder();
+        folder.id = r[r.length - 1].path;
+        this.folderService.getParentFolders(folder).subscribe(folders => {
+          this.parentFolders = folders;
+        });
+      }
+    });
   }
 
 }
