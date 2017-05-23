@@ -14,7 +14,7 @@
 
     <md-nav-list>
       <div *ngFor="let folder of folders">
-        <md-list-item disableRipple="true" (click)="selectResource(folder)" [ngClass]="{'active': folder === selectedResource}">
+        <md-list-item disableRipple="true" (click)="selectResource(folder)" (dblclick)="changeFolder(folder)" [ngClass]="{'active': folder === selectedResource}">
           <div class="element-name" fxFlex.xs="40" fxFlex.gt-xs="50">
             <md-icon>folder</md-icon>
             <span>{{ folder.name }}</span>
@@ -27,7 +27,7 @@
           </div>
           <div class="element-size" fxFlex.xs="10" fxFlex.gt-xs="5">
             <md-menu class="dropdown-menu" #appMenu2>
-              <button md-menu-item>
+              <button md-menu-item (click)="changeFolder(folder)">
                 <md-icon>open_in_new</md-icon>
                 Open
               </button>

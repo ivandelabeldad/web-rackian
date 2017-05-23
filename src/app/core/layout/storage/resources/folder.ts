@@ -5,7 +5,7 @@ export class Folder {
   public description: string;
   public created_at: string;
   public updated_at: string;
-  public parent_folder: Folder;
+  public parent_folder: string;
   public mime_type = '';
   public size = '';
 

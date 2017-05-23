@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .resources-list {
@@ -67,4 +68,8 @@ md-list-item span {
 
 .active md-icon {
   color: #fff !important;
+}
+
+* {
+  user-select: none;
 }

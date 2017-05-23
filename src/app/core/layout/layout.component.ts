@@ -7,15 +7,16 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 })
 export class LayoutComponent implements OnInit {
 
-  loading = true;
+  // loading = true;
+  loading = false;
 
   constructor(private router: Router) {
   }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      this.navigationInterceptor(event);
-    });
+    // this.router.events.subscribe((event) => {
+    //   this.navigationInterceptor(event);
+    // });
   }
 
   // Shows and hides the loading spinner during RouterEvent changes

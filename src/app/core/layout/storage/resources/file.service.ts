@@ -14,13 +14,11 @@ export class FileService {
 
   getFiles(folder?: Folder, url?: string): Observable<File[]> {
     folder = folder || new Folder();
-    url = url || conf.url.api.files;
-    const params = new URLSearchParams();
-    params.set('folder', folder.id);
-    return this.http.get(url, { search: params })
+    if (!folder.id) folder.id = '';
+    url = url || conf.url.api.files + '?folder=' + folder.id;
+    return this.http.get(url)
       .map(res => res.json())
       .mergeMap(data => {
-        console.log(data);
         if (data.next) {
           return this.getFiles(folder, data.next)
             .map(resultsToJoin => [...data.results.map(e => File.createFromJson(e)), ...resultsToJoin]);

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Folder } from './resources/folder';
 import { File } from './resources/file';
@@ -12,19 +13,29 @@ import { FileService } from './resources/file.service';
 })
 export class StorageComponent implements OnInit {
 
-  public resources: any = [];
   public files: File[];
   public folders: Folder[];
   public selectedResource: File|Folder;
 
-  constructor(private fileService: FileService, private folderService: FolderService) { }
+  constructor(private fileService: FileService, private folderService: FolderService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.resources.push(new File());
-    this.fileService.getFiles().subscribe(files => this.resources = [...this.resources, ...files]);
-    this.fileService.getFiles().subscribe(files => this.files = files);
-    this.fileService.getFiles().subscribe(files => this.files = files);
-    this.folderService.getFolders().subscribe(folders => this.folders = folders);
+    this.files = [];
+    this.folders = [];
+    this.activatedRoute.url.subscribe(r => {
+      if (r[r.length - 1].path === 'storage') {
+        this.updateResources();
+      } else {
+        const folder = new Folder();
+        folder.id = r[r.length - 1].path;
+        this.updateResources(folder);
+      }
+    });
+  }
+
+  updateResources(folder?: Folder) {
+    this.fileService.getFiles(folder).subscribe(files => this.files = files);
+    this.folderService.getFolders(folder).subscribe(folders => this.folders = folders);
   }
 
   onSelectResource(resource: File|Folder) {
@@ -37,5 +48,9 @@ export class StorageComponent implements OnInit {
 
   onCreateFolder(resource: Folder) {
     this.folders.push(resource);
+  }
+
+  onChangeFolder(resource: Folder) {
+    this.updateResources(resource);
   }
 }

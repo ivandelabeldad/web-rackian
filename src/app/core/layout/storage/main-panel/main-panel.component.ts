@@ -1,5 +1,6 @@
 import { Inject, Input } from '@angular/core';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { File } from '../resources/file';
 import { Folder } from '../resources/folder';
@@ -20,8 +21,10 @@ export class MainPanelComponent implements OnInit {
   public selectedResource: File|Folder;
   @Output()
   public onSelectResource: EventEmitter<File|Folder> = new EventEmitter<File|Folder>();
+  @Output()
+  public onChangeFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -31,4 +34,7 @@ export class MainPanelComponent implements OnInit {
     this.onSelectResource.emit(this.selectedResource);
   }
 
+  changeFolder(folder: Folder) {
+    this.router.navigate(['/storage/folder/' + folder.id]);
+  }
 }

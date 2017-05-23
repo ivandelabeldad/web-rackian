@@ -16,6 +16,7 @@ import { MainModule } from './storage/storage.module';
 const routes: Routes = [
   { path: '', redirectTo: 'storage', pathMatch: 'full' },
   { path: 'storage', component: StorageComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
+  { path: 'storage/folder/:id', component: StorageComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
   { path: 'logout', component: LogoutComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
 ];
