@@ -11,7 +11,7 @@ import { FolderService } from '../resources/folder.service';
 })
 export class BreadcumsComponent implements OnInit {
 
-  private parentFolders: Folder[];
+  public parentFolders: Folder[];
 
   constructor(private activatedRoute: ActivatedRoute, private folderService: FolderService) { }
 
