@@ -26,10 +26,11 @@ a {
   align-items: center;
   height: 100%;
   padding: 0 16px;
+  transition: 100ms;
 }
 
 a:hover {
-  background: #EEEEEE;
+  background: #E0E0E0;
 }
 
 .material-icons {

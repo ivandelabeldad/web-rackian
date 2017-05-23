@@ -14,7 +14,9 @@ export class FolderService {
 
   getFolders(folder?: Folder, url?: string): Observable<Folder[]> {
     folder = folder || new Folder();
-    if (!folder.id) folder.id = '';
+    if (!folder.id) {
+      folder.id = '';
+    }
     url = url || conf.url.api.folders + '?parent_folder=' + folder.id;
     return this.http.get(url)
       .map(res => res.json())
@@ -29,13 +31,31 @@ export class FolderService {
   }
 
   getParentFolder(resource: File|Folder): Observable<Folder> {
-    const url = conf.url.api.folders + '/' + resource.id;
+    let url = '';
+    if (resource instanceof File) {
+      url += conf.url.api.files;
+    }
+    if (resource instanceof Folder) {
+      url += conf.url.api.folders;
+    }
+    url += resource.id;
     return this.http.get(url).map(res => res.json()).map(data => Folder.createFromJson(data));
   }
 
   getParentFolders(resource: File|Folder, result?: Folder[], nextUrl?: string): Observable<Folder[]> {
-    const url = nextUrl || conf.url.api.folders + '/' + resource.id;
-    if (!result) result = [];
+    let url = nextUrl || '';
+    if (!url) {
+      if (resource instanceof File) {
+        url += conf.url.api.files;
+      }
+      if (resource instanceof Folder) {
+        url += conf.url.api.folders;
+      }
+      url += resource.id;
+    }
+    if (!result) {
+      result = [];
+    }
     return this.http.get(url)
       .map(res => res.json())
       .mergeMap(data => {
@@ -44,9 +64,26 @@ export class FolderService {
         if (data.parent_folder == null) {
           return Observable.of(result.reverse());
         } else {
-          return this.getParentFolders(folder, result, folder.parent_folder);
+          return this.getParentFolders(folder, result, folder.parent_folder.toString());
         }
       });
+  }
+
+  create(folder: Folder): Observable<Folder> {
+    const url = conf.url.api.folders;
+    const body: any = {};
+    body.name = folder.name;
+    if (folder.description) {
+      body.description = folder.description;
+    }
+    if (folder.parent_folder) {
+      body.parent_folder = folder.parent_folder.toString();
+    }
+    return this.http.post(url, body).map(res => Folder.createFromJson(res.json()));
+  }
+
+  remove(folder: Folder): Observable<null> {
+    return this.http.delete(folder.url.toString());
   }
 
 }

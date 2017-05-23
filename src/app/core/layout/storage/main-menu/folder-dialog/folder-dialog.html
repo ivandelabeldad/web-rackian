@@ -1,0 +1,17 @@
+<div>
+  <span class="title">Create Folder</span>
+</div>
+<md-input-container>
+  <input mdInput type="text" placeholder="Folder Name" #input (onchange)="removeError()">
+</md-input-container>
+<div class="error">
+  <label *ngIf="nameError">The folder name cannot be empty.</label>
+</div>
+<div class="button-container">
+  <button md-raised-button (click)="cancel()">
+    CANCEL
+  </button>
+  <button md-raised-button color="primary" (click)="create(input.value)">
+    CREATE
+  </button>
+</div>

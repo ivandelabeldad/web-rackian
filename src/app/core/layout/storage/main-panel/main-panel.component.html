@@ -31,19 +31,19 @@
                 <md-icon>open_in_new</md-icon>
                 Open
               </button>
-              <button md-menu-item>
-                <md-icon>file_download</md-icon>
-                Download
-              </button>
-              <button md-menu-item>
-                <md-icon>folder</md-icon>
-                Move
-              </button>
-              <button md-menu-item>
-                <md-icon>share</md-icon>
-                Share
-              </button>
-              <button md-menu-item>
+              <!--<button md-menu-item>-->
+                <!--<md-icon>file_download</md-icon>-->
+                <!--Download-->
+              <!--</button>-->
+              <!--<button md-menu-item>-->
+                <!--<md-icon>folder</md-icon>-->
+                <!--Move-->
+              <!--</button>-->
+              <!--<button md-menu-item>-->
+                <!--<md-icon>share</md-icon>-->
+                <!--Share-->
+              <!--</button>-->
+              <button md-menu-item (click)="deleteFolder(folder)">
                 <md-icon>delete</md-icon>
                 Remove
               </button>
@@ -57,7 +57,7 @@
       </div>
 
       <div *ngFor="let file of files">
-        <md-list-item disableRipple="true" (click)="selectResource(file)" [ngClass]="{'active': file === selectedResource}">
+        <md-list-item disableRipple="true" (click)="selectResource(file)" (dblclick)="openFile(file)" [ngClass]="{'active': file === selectedResource}">
           <div class="element-name" fxFlex.xs="40" fxFlex.gt-xs="50">
             <md-icon>insert_drive_file</md-icon>
             <span>{{ file.name }}</span>
@@ -70,23 +70,23 @@
           </div>
           <div class="element-size" fxFlex.xs="10" fxFlex.gt-xs="5">
             <md-menu class="dropdown-menu" #appMenu1="mdMenu">
-              <button md-menu-item>
+              <a md-menu-item href="{{ file.link }}" target="_blank">
                 <md-icon>open_in_new</md-icon>
                 Open
-              </button>
-              <a href="{{ file.link }}" md-menu-item>
+              </a>
+              <a md-menu-item href="{{ file.link }}" download="asdfasfd">
                 <md-icon>file_download</md-icon>
                 Download
               </a>
-              <button md-menu-item>
-                <md-icon>folder</md-icon>
-                Move
-              </button>
-              <button md-menu-item>
-                <md-icon>share</md-icon>
-                Share
-              </button>
-              <button md-menu-item>
+              <!--<button md-menu-item>-->
+                <!--<md-icon>folder</md-icon>-->
+                <!--Move-->
+              <!--</button>-->
+              <!--<button md-menu-item>-->
+                <!--<md-icon>share</md-icon>-->
+                <!--Share-->
+              <!--</button>-->
+              <button md-menu-item (click)="deleteFile(file)">
                 <md-icon>delete</md-icon>
                 Remove
               </button>

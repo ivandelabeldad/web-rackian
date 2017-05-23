@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import { File } from '../resources/file';
 import { Folder } from '../resources/folder';
+import { FileService } from '../resources/file.service';
+import { FolderService } from '../resources/folder.service';
 
 
 @Component({
@@ -24,7 +26,7 @@ export class MainPanelComponent implements OnInit {
   @Output()
   public onChangeFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private fileService: FileService, private folderService: FolderService) { }
 
   ngOnInit() {
   }
@@ -36,5 +38,26 @@ export class MainPanelComponent implements OnInit {
 
   changeFolder(folder: Folder) {
     this.router.navigate(['/storage/folder/' + folder.id]);
+  }
+
+  openFile(file: File) {
+    console.log(file);
+    const newWindow = window.open(file.link.toString(), '_blank');
+  }
+
+  deleteFolder(folder: Folder) {
+    this.folderService.remove(folder).subscribe(() => {
+      this.folders = this.folders.filter(f => f.id !== folder.id);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  deleteFile(file: File) {
+    this.fileService.remove(file).subscribe(() => {
+      this.files = this.files.filter(f => f.id !== file.id);
+    }, error => {
+      console.log(error);
+    });
   }
 }

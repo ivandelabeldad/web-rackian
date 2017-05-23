@@ -14,7 +14,9 @@ export class FileService {
 
   getFiles(folder?: Folder, url?: string): Observable<File[]> {
     folder = folder || new Folder();
-    if (!folder.id) folder.id = '';
+    if (!folder.id) {
+      folder.id = '';
+    }
     url = url || conf.url.api.files + '?folder=' + folder.id;
     return this.http.get(url)
       .map(res => res.json())
@@ -26,6 +28,10 @@ export class FileService {
           return Observable.of(data.results.map(e => File.createFromJson(e)));
         }
       });
+  }
+
+  remove(file: File): Observable<null> {
+    return this.http.delete(file.url.toString());
   }
 
 }

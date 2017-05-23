@@ -8,13 +8,16 @@ import { AuthHttpService } from '../../../../shared/authentication/auth-http.ser
 import { conf } from '../../../../conf';
 import { File as FileResource } from '../resources/file';
 import { Folder } from '../resources/folder';
+import { MdDialog } from '@angular/material';
+import { FolderDialogComponent } from './folder-dialog/folder-dialog.component';
+import { FolderService } from '../resources/folder.service';
 
 @Component({
   selector: 'rackian-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss'],
 })
-export class MainBarComponent implements OnInit {
+export class MainMenuComponent implements OnInit {
 
   user: User;
   @Output()
@@ -22,7 +25,12 @@ export class MainBarComponent implements OnInit {
   @Output()
   public onCreateFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
 
-  constructor(private userService: User, private http: AuthHttpService, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private folderService: FolderService,
+    private userService: User,
+    private http: AuthHttpService,
+    private activatedRoute: ActivatedRoute,
+    private dialog: MdDialog) {
   }
 
   ngOnInit() {
@@ -35,15 +43,17 @@ export class MainBarComponent implements OnInit {
       return;
     }
     this.activatedRoute.url.subscribe(route => {
-      let folder_id = null;
+      let folder = null;
       if (route[route.length - 1].path !== 'storage') {
-        folder_id = conf.url.api.folders + route[route.length - 1].path + '/';
+        folder = Folder.urlById(route[route.length - 1].path);
       }
       const file: File = fileList[0];
       const formData: FormData = new FormData();
       formData.append('link', file);
       formData.append('mime_type', file.type);
-      if (folder_id) formData.append('folder', folder_id);
+      if (folder) {
+        formData.append('folder', folder);
+      }
       const headers = new Headers();
       headers.append('Accept', 'application/json');
       const options = new RequestOptions({ headers });
@@ -58,6 +68,27 @@ export class MainBarComponent implements OnInit {
           error => console.log(error)
         );
     });
+  }
+
+  createFolder() {
+    const dialogRef = this.dialog.open(FolderDialogComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        if (!result) {
+          return;
+        }
+        this.activatedRoute.url.subscribe(route => {
+          const folder = new Folder();
+          if (route[route.length - 1].path !== 'storage') {
+            folder.parent_folder = new URL(Folder.urlById(route[route.length - 1].path));
+          }
+          folder.name = result;
+          this.folderService.create(folder).subscribe(resultFolder => {
+            this.onCreateFolder.emit(resultFolder);
+          }, error => {
+            console.log(error);
+          });
+        });
+      });
   }
 
 }
