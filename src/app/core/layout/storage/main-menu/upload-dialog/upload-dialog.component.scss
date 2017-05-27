@@ -1,0 +1,40 @@
+@import "src/assets/scss/variables";
+
+.root-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 2px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  background-color: #eee;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+.title {
+  padding: 10px 20px;
+  color: #fff;
+  border-radius: 2px 2px 0 0;
+  background-color: $primary-color;
+}
+
+.content {
+  color: #424242;
+  display: flex;
+  padding: 10px 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+md-progress-spinner {
+  height: 40px;
+  width: 40px;
+  margin-left: 20px;
+}
+
+.file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

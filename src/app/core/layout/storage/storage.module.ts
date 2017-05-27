@@ -12,6 +12,7 @@ import { ResourcesModule } from './resources/resources.module';
 import { FolderDialogComponent } from './main-menu/folder-dialog/folder-dialog.component';
 import { FileDialogComponent } from './main-panel/file-dialog/file-dialog.component';
 import { RenameDialogComponent } from './main-panel/rename-dialog/rename-dialog.component';
+import { UploadDialogComponent } from './main-menu/upload-dialog/upload-dialog.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { RenameDialogComponent } from './main-panel/rename-dialog/rename-dialog.
     FolderDialogComponent,
     FileDialogComponent,
     RenameDialogComponent,
+    UploadDialogComponent,
   ],
   entryComponents: [
     FolderDialogComponent,

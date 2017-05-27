@@ -25,6 +25,7 @@ export class MainMenuComponent implements OnInit {
   public onUploadFile: EventEmitter<FileResource> = new EventEmitter<FileResource>();
   @Output()
   public onCreateFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
+  public uploadingFile: FileResource;
 
   constructor(
     private folderService: FolderService,
@@ -49,6 +50,10 @@ export class MainMenuComponent implements OnInit {
         folder = Folder.urlById(route[route.length - 1].path);
       }
       const file: File = fileList[0];
+      const fileResouce = new FileResource();
+      fileResouce.name = file.name;
+      fileResouce.mime_type = file.type;
+      this.uploadingFile = fileResouce;
       const formData: FormData = new FormData();
       formData.append('link', file);
       formData.append('mime_type', file.type);
@@ -65,7 +70,8 @@ export class MainMenuComponent implements OnInit {
             const newFile = FileResource.createFromJson(data);
             this.onUploadFile.emit(newFile);
           },
-          error => console.log(error)
+          error => console.log(error),
+          () => { this.uploadingFile = null; }
         );
     });
   }
