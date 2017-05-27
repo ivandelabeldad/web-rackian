@@ -22,9 +22,11 @@ export class FolderDialogComponent {
     }
     this.dialogRef.close(value);
   }
+
   cancel() {
     this.dialogRef.close(null);
   }
+
   removeError() {
     this.nameError = false;
   }

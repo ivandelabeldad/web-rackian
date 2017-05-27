@@ -9,6 +9,7 @@ import { Folder } from '../resources/folder';
 import { FileService } from '../resources/file.service';
 import { FolderService } from '../resources/folder.service';
 import { FileDialogComponent } from './file-dialog/file-dialog.component';
+import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class MainPanelComponent implements OnInit {
     private router: Router,
     private fileService: FileService,
     private folderService: FolderService,
-    private fileDialog: MdDialog,
+    private dialog: MdDialog,
   ) { }
 
   ngOnInit() {
@@ -55,7 +56,7 @@ export class MainPanelComponent implements OnInit {
     }
     this.fileService.getFileData(file).subscribe(blob => {
       const urlObject = URL.createObjectURL(blob);
-      this.fileDialog.open(FileDialogComponent, {
+      this.dialog.open(FileDialogComponent, {
         data: urlObject,
         height: '90vh',
         width: '90vw',
@@ -82,6 +83,20 @@ export class MainPanelComponent implements OnInit {
       this.files = this.files.filter(f => f.id !== file.id);
     }, error => {
       console.log(error);
+    });
+  }
+
+  rename(resource: File|Folder) {
+    const dialog = this.dialog.open(RenameDialogComponent, {
+      data: resource,
+    });
+    dialog.afterClosed().subscribe(resourceModified => {
+      if (resourceModified instanceof File) {
+        this.fileService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+      }
+      if (resourceModified instanceof Folder) {
+        this.folderService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+      }
     });
   }
 }

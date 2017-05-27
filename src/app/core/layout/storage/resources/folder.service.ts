@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Folder } from './folder';
@@ -84,6 +85,10 @@ export class FolderService {
 
   remove(folder: Folder): Observable<null> {
     return this.http.delete(folder.url.toString());
+  }
+
+  update(folder: Folder): Observable<Folder> {
+    return this.http.patch(folder.url.toString(), folder).map(response => Folder.createFromJson(response.json()));
   }
 
 }

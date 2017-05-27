@@ -11,6 +11,7 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ResourcesModule } from './resources/resources.module';
 import { FolderDialogComponent } from './main-menu/folder-dialog/folder-dialog.component';
 import { FileDialogComponent } from './main-panel/file-dialog/file-dialog.component';
+import { RenameDialogComponent } from './main-panel/rename-dialog/rename-dialog.component';
 
 
 @NgModule({
@@ -29,10 +30,12 @@ import { FileDialogComponent } from './main-panel/file-dialog/file-dialog.compon
     StorageComponent,
     FolderDialogComponent,
     FileDialogComponent,
+    RenameDialogComponent,
   ],
   entryComponents: [
     FolderDialogComponent,
     FileDialogComponent,
+    RenameDialogComponent,
   ],
 })
 export class MainModule { }

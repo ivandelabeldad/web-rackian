@@ -57,8 +57,7 @@ export class MainMenuComponent implements OnInit {
       }
       const headers = new Headers();
       headers.append('Accept', 'application/json');
-      const options = new RequestOptions({ headers });
-      this.http.post(`${conf.url.api.files}`, formData, options)
+      this.http.post(`${conf.url.api.files}`, formData, { headers })
         .map(res => res.json())
         .catch(error => Observable.throw(error))
         .subscribe(

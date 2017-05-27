@@ -17,9 +17,9 @@ export class Folder {
     if (json.url) {
       folder.url = new URL(json.url);
     }
-    folder.id = json.id || null;
-    folder.name = json.name || null;
-    folder.description = json.description || null;
+    folder.id = json.id || '';
+    folder.name = json.name || '';
+    folder.description = json.description || '';
     folder.created_at = json.created_at || null;
     folder.updated_at = json.updated_at || null;
     if (json.parent_folder instanceof String) {
