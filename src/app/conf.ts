@@ -7,6 +7,9 @@ export const conf = {
       files: '',
       folders: '',
     },
+    register: {
+      base: '',
+    }
   },
 };
 
@@ -16,3 +19,4 @@ conf.url.api.user = conf.url.api.base + 'user/';
 conf.url.api.token = conf.url.api.base + 'token/';
 conf.url.api.files = conf.url.api.base + 'files/';
 conf.url.api.folders = conf.url.api.base + 'folders/';
+conf.url.register.base = 'https://register.rackian.com/';

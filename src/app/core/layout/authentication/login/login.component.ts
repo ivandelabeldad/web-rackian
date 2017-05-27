@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { conf } from '../../../../conf';
 
 @Component({
   selector: 'rackian-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   password = '';
   remember = false;
   error = false;
+  registerUrl = conf.url.register.base;
 
   constructor(private loginService: LoginService, private router: Router) {
   }

@@ -73,3 +73,19 @@ md-card-actions {
     margin-top: 16px;
   }
 }
+.create-account a {
+  color: $primary-color;
+  text-decoration: none;
+  float: left;
+}
+md-card-actions {
+  display: flex;
+}
+md-card-actions .create-account {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+md-card-actions .create-account, md-card-actions button {
+  flex-shrink: 1;
+}
