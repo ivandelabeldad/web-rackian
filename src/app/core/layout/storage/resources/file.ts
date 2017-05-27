@@ -38,4 +38,11 @@ export class File {
   constructor() {
   }
 
+  isRenderable() {
+    return [
+      // 'application/pdf',
+      // 'image/png',
+    ].indexOf(this.mime_type) !== -1;
+  }
+
 }

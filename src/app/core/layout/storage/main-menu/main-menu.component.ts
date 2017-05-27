@@ -1,16 +1,17 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { User } from '../../../../shared/authentication/user';
 import { RequestOptions, Headers } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
+import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthHttpService } from '../../../../shared/authentication/auth-http.service';
 import { conf } from '../../../../conf';
 import { File as FileResource } from '../resources/file';
 import { Folder } from '../resources/folder';
-import { MdDialog } from '@angular/material';
 import { FolderDialogComponent } from './folder-dialog/folder-dialog.component';
 import { FolderService } from '../resources/folder.service';
+import { User } from '../../../../shared/authentication/user';
+
 
 @Component({
   selector: 'rackian-main-menu',
@@ -30,8 +31,8 @@ export class MainMenuComponent implements OnInit {
     private userService: User,
     private http: AuthHttpService,
     private activatedRoute: ActivatedRoute,
-    private dialog: MdDialog) {
-  }
+    private dialog: MdDialog
+  ) { }
 
   ngOnInit() {
     this.user = this.userService;

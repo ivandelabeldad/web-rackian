@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ResponseContentType, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Folder } from './folder';
@@ -28,6 +29,17 @@ export class FileService {
           return Observable.of(data.results.map(e => File.createFromJson(e)));
         }
       });
+  }
+
+  getFileData(file: File): Observable<Blob> {
+    const url = `${conf.url.api.downloads}${file.id}`;
+    console.log(url);
+    const headers = new Headers();
+    headers.append('Content-Type', file.mime_type);
+    return this.http.get(url, {
+      responseType: ResponseContentType.Blob,
+      headers: headers,
+    }).map(data => new Blob([data.blob()], { type: file.mime_type }));
   }
 
   remove(file: File): Observable<null> {

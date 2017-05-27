@@ -1,11 +1,14 @@
-import { Inject, Input } from '@angular/core';
+import { Input } from '@angular/core';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import * as FileSaver from 'file-saver';
 
 import { File } from '../resources/file';
 import { Folder } from '../resources/folder';
 import { FileService } from '../resources/file.service';
 import { FolderService } from '../resources/folder.service';
+import { FileDialogComponent } from './file-dialog/file-dialog.component';
 
 
 @Component({
@@ -26,7 +29,12 @@ export class MainPanelComponent implements OnInit {
   @Output()
   public onChangeFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
 
-  constructor(private router: Router, private fileService: FileService, private folderService: FolderService) { }
+  constructor(
+    private router: Router,
+    private fileService: FileService,
+    private folderService: FolderService,
+    private fileDialog: MdDialog,
+  ) { }
 
   ngOnInit() {
   }
@@ -41,8 +49,24 @@ export class MainPanelComponent implements OnInit {
   }
 
   openFile(file: File) {
-    console.log(file);
-    const newWindow = window.open(file.link.toString(), '_blank');
+    if (!file.isRenderable()) {
+      this.downloadFile(file);
+      return;
+    }
+    this.fileService.getFileData(file).subscribe(blob => {
+      const urlObject = URL.createObjectURL(blob);
+      this.fileDialog.open(FileDialogComponent, {
+        data: urlObject,
+        height: '90vh',
+        width: '90vw',
+      });
+    });
+  }
+
+  downloadFile(file: File) {
+    this.fileService.getFileData(file).subscribe(blob => {
+      FileSaver.saveAs(blob, file.name + file.extension, true);
+    });
   }
 
   deleteFolder(folder: Folder) {

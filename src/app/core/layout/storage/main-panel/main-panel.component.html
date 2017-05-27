@@ -70,11 +70,11 @@
           </div>
           <div class="element-size" fxFlex.xs="10" fxFlex.gt-xs="5">
             <md-menu class="dropdown-menu" #appMenu1="mdMenu">
-              <a md-menu-item href="{{ file.link }}" target="_blank">
+              <a (click)="openFile(file)">
                 <md-icon>open_in_new</md-icon>
                 Open
               </a>
-              <a md-menu-item href="{{ file.link }}" download="asdfasfd">
+              <a md-menu-item (click)="downloadFile(file)">
                 <md-icon>file_download</md-icon>
                 Download
               </a>

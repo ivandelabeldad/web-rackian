@@ -10,6 +10,7 @@ import { MainPanelComponent } from './main-panel/main-panel.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ResourcesModule } from './resources/resources.module';
 import { FolderDialogComponent } from './main-menu/folder-dialog/folder-dialog.component';
+import { FileDialogComponent } from './main-panel/file-dialog/file-dialog.component';
 
 
 @NgModule({
@@ -27,9 +28,11 @@ import { FolderDialogComponent } from './main-menu/folder-dialog/folder-dialog.c
     BreadcumsComponent,
     StorageComponent,
     FolderDialogComponent,
+    FileDialogComponent,
   ],
   entryComponents: [
     FolderDialogComponent,
+    FileDialogComponent,
   ],
 })
 export class MainModule { }

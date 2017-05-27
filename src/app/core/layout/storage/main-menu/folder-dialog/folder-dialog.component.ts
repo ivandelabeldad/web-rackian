@@ -1,5 +1,6 @@
 import { MdDialogRef } from '@angular/material';
 import { Component } from '@angular/core';
+
 import { MainMenuComponent } from '../main-menu.component';
 
 
