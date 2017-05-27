@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { RequestOptions, Headers } from '@angular/http';
+import { Headers } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -26,6 +26,7 @@ export class MainMenuComponent implements OnInit {
   @Output()
   public onCreateFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
   public uploadingFile: FileResource;
+  private parentFolder: URL;
 
   constructor(
     private folderService: FolderService,
@@ -37,6 +38,13 @@ export class MainMenuComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.userService;
+    this.activatedRoute.url.subscribe(route => {
+      if (route[route.length - 1].path !== 'storage') {
+        this.parentFolder = new URL(Folder.urlById(route[route.length - 1].path));
+      } else {
+        this.parentFolder = null;
+      }
+    });
   }
 
   fileUpload(evt) {
@@ -44,36 +52,30 @@ export class MainMenuComponent implements OnInit {
     if (fileList.length <= 0) {
       return;
     }
-    this.activatedRoute.url.subscribe(route => {
-      let folder = null;
-      if (route[route.length - 1].path !== 'storage') {
-        folder = Folder.urlById(route[route.length - 1].path);
-      }
-      const file: File = fileList[0];
-      const fileResouce = new FileResource();
-      fileResouce.name = file.name;
-      fileResouce.mime_type = file.type;
-      this.uploadingFile = fileResouce;
-      const formData: FormData = new FormData();
-      formData.append('link', file);
-      formData.append('mime_type', file.type);
-      if (folder) {
-        formData.append('folder', folder);
-      }
-      const headers = new Headers();
-      headers.append('Accept', 'application/json');
-      this.http.post(`${conf.url.api.files}`, formData, { headers })
-        .map(res => res.json())
-        .catch(error => Observable.throw(error))
-        .subscribe(
-          data => {
-            const newFile = FileResource.createFromJson(data);
-            this.onUploadFile.emit(newFile);
-          },
-          error => console.log(error),
-          () => { this.uploadingFile = null; }
-        );
-    });
+    const file: File = fileList[0];
+    const fileResouce = new FileResource();
+    fileResouce.name = file.name;
+    fileResouce.mime_type = file.type;
+    this.uploadingFile = fileResouce;
+    const formData: FormData = new FormData();
+    formData.append('link', file);
+    formData.append('mime_type', file.type);
+    if (this.parentFolder) {
+      formData.append('folder', this.parentFolder);
+    }
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+    this.http.post(`${conf.url.api.files}`, formData, { headers })
+      .map(res => res.json())
+      .catch(error => Observable.throw(error))
+      .subscribe(
+        data => {
+          const newFile = FileResource.createFromJson(data);
+          this.onUploadFile.emit(newFile);
+        },
+        error => console.log(error),
+        () => { this.uploadingFile = null; }
+      );
   }
 
   createFolder() {
@@ -82,17 +84,15 @@ export class MainMenuComponent implements OnInit {
         if (!result) {
           return;
         }
-        this.activatedRoute.url.subscribe(route => {
-          const folder = new Folder();
-          if (route[route.length - 1].path !== 'storage') {
-            folder.parent_folder = new URL(Folder.urlById(route[route.length - 1].path));
-          }
-          folder.name = result;
-          this.folderService.create(folder).subscribe(resultFolder => {
-            this.onCreateFolder.emit(resultFolder);
-          }, error => {
-            console.log(error);
-          });
+        const folder = new Folder();
+        if (this.parentFolder) {
+          folder.parent_folder = this.parentFolder;
+        }
+        folder.name = result;
+        this.folderService.create(folder).subscribe(resultFolder => {
+          this.onCreateFolder.emit(resultFolder);
+        }, error => {
+          console.log(error);
         });
       });
   }
