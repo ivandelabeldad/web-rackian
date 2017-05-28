@@ -1,12 +1,12 @@
 <div class="root-container">
   <div class="headers">
-    <div class="title-name" fxFlex.xs="40" fxFlex.gt-xs="50">
+    <div class="title-name" fxFlex.xs="60" fxFlex.gt-xs="50">
       <span>Name</span>
     </div>
-    <div class="title-modified" fxFlex.xs="25" fxFlex.gt-xs="30">
+    <div class="title-modified" fxFlex.xs="30" fxFlex.gt-xs="30">
       <span fxHide.xs>Last </span><span>Modified</span>
     </div>
-    <div class="title-size" fxFlex.xs="25" fxFlex.gt-xs="15">
+    <div class="title-size" fxFlex.xs="0" fxFlex.gt-xs="15" fxHide.xs>
       <span>Size</span>
     </div>
   </div>
@@ -15,14 +15,14 @@
     <md-nav-list>
       <div *ngFor="let folder of folders">
         <md-list-item disableRipple="true" (click)="selectResource(folder)" (dblclick)="changeFolder(folder)" [ngClass]="{'active': folder === selectedResource}">
-          <div class="element-name" fxFlex.xs="40" fxFlex.gt-xs="50">
-            <md-icon>folder</md-icon>
+          <div class="element-name" fxFlex.xs="60" fxFlex.gt-xs="50">
+            <i class="mdi mdi-folder"></i>
             <span>{{ folder.name }}</span>
           </div>
-          <div class="element-modified" fxFlex.xs="25" fxFlex.gt-xs="30">
+          <div class="element-modified" fxFlex.xs="30" fxFlex.gt-xs="30">
             <span>{{ folder.updated_at | date:'mediumDate' }}</span>
           </div>
-          <div class="element-size" fxFlex.xs="25" fxFlex.gt-xs="15">
+          <div class="element-size" fxFlex.xs="0" fxFlex.gt-xs="15" fxHide.xs>
             <span></span>
           </div>
           <div class="element-size" fxFlex.xs="10" fxFlex.gt-xs="5">
@@ -62,14 +62,15 @@
 
       <div *ngFor="let file of files">
         <md-list-item disableRipple="true" (click)="selectResource(file)" (dblclick)="openFile(file)" [ngClass]="{'active': file === selectedResource}">
-          <div class="element-name" fxFlex.xs="40" fxFlex.gt-xs="50">
-            <md-icon>insert_drive_file</md-icon>
+          <div class="element-name" fxFlex.xs="60" fxFlex.gt-xs="50">
+            <i [outerHTML]="file | fileIcon"></i>
+            <!--<md-icon>insert_drive_file</md-icon>-->
             <span>{{ file.name }}</span>
           </div>
-          <div class="element-modified" fxFlex.xs="25" fxFlex.gt-xs="30">
+          <div class="element-modified" fxFlex.xs="30" fxFlex.gt-xs="30">
             <span>{{ file.updated_at | date:'mediumDate' }}</span>
           </div>
-          <div class="element-size" fxFlex.xs="25" fxFlex.gt-xs="15">
+          <div class="element-size" fxFlex.xs="0" fxFlex.gt-xs="15" fxHide.xs>
             <span>{{ file.size | fileSize }}</span>
           </div>
           <div class="element-size" fxFlex.xs="10" fxFlex.gt-xs="5">
@@ -111,3 +112,4 @@
   </div>
 
 </div>
+<rackian-download-dialog [file]="downloadingFile"></rackian-download-dialog>

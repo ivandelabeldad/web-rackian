@@ -8,8 +8,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'rackian-file-dialog',
-  templateUrl: './file-dialog.html',
-  styleUrls: ['./file-dialog.scss'],
+  templateUrl: './file-dialog.component.html',
+  styleUrls: ['./file-dialog.component.scss'],
 })
 export class FileDialogComponent implements OnInit {
 

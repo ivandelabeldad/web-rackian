@@ -56,6 +56,7 @@ export class MainMenuComponent implements OnInit {
     const fileResouce = new FileResource();
     fileResouce.name = file.name;
     fileResouce.mime_type = file.type;
+    fileResouce.extension = file.name.substring(file.name.lastIndexOf('.'));
     this.uploadingFile = fileResouce;
     const formData: FormData = new FormData();
     formData.append('link', file);

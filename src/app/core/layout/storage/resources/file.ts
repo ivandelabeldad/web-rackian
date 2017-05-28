@@ -36,6 +36,10 @@ export class File {
     return file;
   }
 
+  static sortByName(a: File , b: File) {
+    return a.name.localeCompare(b.name);
+  }
+
   constructor() {
   }
 
@@ -45,5 +49,4 @@ export class File {
       // 'image/png',
     ].indexOf(this.mime_type) !== -1;
   }
-
 }

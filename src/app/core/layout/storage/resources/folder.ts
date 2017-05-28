@@ -30,6 +30,10 @@ export class Folder {
     return folder;
   }
 
+  static sortByName(a: Folder , b: Folder) {
+    return a.name.localeCompare(b.name);
+  }
+
   public static urlById(id: string) {
     return conf.url.api.folders + id + '/';
   }

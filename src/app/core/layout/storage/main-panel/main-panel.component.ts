@@ -10,6 +10,7 @@ import { FileService } from '../resources/file.service';
 import { FolderService } from '../resources/folder.service';
 import { FileDialogComponent } from './file-dialog/file-dialog.component';
 import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
+import { DownloadDialogComponent } from './download-dialog/download-dialog.component';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class MainPanelComponent implements OnInit {
   public onSelectResource: EventEmitter<File|Folder> = new EventEmitter<File|Folder>();
   @Output()
   public onChangeFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
+  public downloadingFile: File;
 
   constructor(
     private router: Router,
@@ -65,9 +67,11 @@ export class MainPanelComponent implements OnInit {
   }
 
   downloadFile(file: File) {
+    this.downloadingFile = file;
     this.fileService.getFileData(file).subscribe(blob => {
       FileSaver.saveAs(blob, file.name + file.extension, true);
-    });
+    }, e => console.log(e),
+      () => this.downloadingFile = null);
   }
 
   deleteFolder(folder: Folder) {

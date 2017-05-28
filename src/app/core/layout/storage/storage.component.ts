@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Folder } from './resources/folder';
@@ -34,8 +34,8 @@ export class StorageComponent implements OnInit {
   }
 
   updateResources(folder?: Folder) {
-    this.fileService.getFiles(folder).subscribe(files => this.files = files);
-    this.folderService.getFolders(folder).subscribe(folders => this.folders = folders);
+    this.fileService.getFiles(folder).subscribe(files => this.files = files.sort(File.sortByName));
+    this.folderService.getFolders(folder).subscribe(folders => this.folders = folders.sort(Folder.sortByName));
   }
 
   onSelectResource(resource: File|Folder) {
@@ -44,10 +44,12 @@ export class StorageComponent implements OnInit {
 
   onUploadFile(resource: File) {
     this.files.push(resource);
+    this.files.sort(File.sortByName);
   }
 
   onCreateFolder(resource: Folder) {
     this.folders.push(resource);
+    this.folders.sort(Folder.sortByName);
   }
 
   onChangeFolder(resource: Folder) {
