@@ -47,7 +47,10 @@ export class FileService {
   }
 
   update(file: File): Observable<File> {
-    return this.http.patch(file.url.toString(), file).map(response => File.createFromJson(response.json()));
+    return this.http.patch(file.url.toString(), file).map(response => {
+      console.log(response);
+      return File.createFromJson(response.json());
+    });
   }
 
 }

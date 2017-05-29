@@ -32,13 +32,7 @@ export class FolderService {
 
   getParentFolder(resource: File|Folder): Observable<Folder> {
     let url = '';
-    if (resource instanceof File) {
-      url += conf.url.api.files;
-    }
-    if (resource instanceof Folder) {
-      url += conf.url.api.folders;
-    }
-    url += resource.id;
+    url += resource.getParentFolder().toString();
     return this.http.get(url).map(res => res.json()).map(data => Folder.createFromJson(data));
   }
 

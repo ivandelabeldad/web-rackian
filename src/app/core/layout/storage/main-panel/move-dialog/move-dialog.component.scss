@@ -1,40 +1,60 @@
-@import "src/assets/scss/variables";
-
 .root-container {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  border-radius: 2px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  background-color: #eee;
+  margin: -24px;
   display: flex;
   flex-direction: column;
-  width: 250px;
+  height: 350px;
+  overflow: hidden;
 }
-
-.title {
-  padding: 10px 20px;
-  color: #fff;
-  border-radius: 2px 2px 0 0;
-  background-color: $primary-color;
+.button-container {
+  flex-shrink: 0;
+  flex-grow: 0;
 }
-
-.content {
-  color: #424242;
-  display: flex;
-  padding: 10px 20px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-md-progress-spinner {
-  height: 40px;
-  width: 40px;
-  margin-left: 20px;
-}
-
-.file-name {
+.title-container {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 24px;
+  background-color: #eee;
+}
+.tree {
+  overflow: auto;
+  flex-grow: 1;
+}
+md-icon {
+  color: #757575;
+}
+h4 {
+  color: #424242;
+}
+
+.title {
+  font-size: 1rem;
+  color: #424242;
+  font-weight: 400;
+}
+.title-name {
+  margin-left: 3px;
+  font-size: 1.25rem;
+  color: #424242;
+  font-weight: 300;
+}
+
+md-input-container {
+  margin-top: 20px;
+  width: 300px;
+  margin-bottom: 5px;
+}
+
+.error {
+  color: #F44336;
+  margin-bottom: 30px;
+}
+
+.button-container {
+  text-align: right;
+  padding: 10px;
+}
+
+.button-container button {
+  margin-left: 10px;
 }

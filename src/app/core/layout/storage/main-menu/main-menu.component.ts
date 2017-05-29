@@ -26,21 +26,20 @@ export class MainMenuComponent implements OnInit {
   @Output()
   public onCreateFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
   public uploadingFile: FileResource;
-  private parentFolder: URL;
+  private parentFolder: string;
 
-  constructor(
-    private folderService: FolderService,
-    private userService: User,
-    private http: AuthHttpService,
-    private activatedRoute: ActivatedRoute,
-    private dialog: MdDialog
-  ) { }
+  constructor(private folderService: FolderService,
+              private userService: User,
+              private http: AuthHttpService,
+              private activatedRoute: ActivatedRoute,
+              private dialog: MdDialog) {
+  }
 
   ngOnInit() {
     this.user = this.userService;
     this.activatedRoute.url.subscribe(route => {
       if (route[route.length - 1].path !== 'storage') {
-        this.parentFolder = new URL(Folder.urlById(route[route.length - 1].path));
+        this.parentFolder = Folder.urlById(route[route.length - 1].path);
       } else {
         this.parentFolder = null;
       }
@@ -75,27 +74,29 @@ export class MainMenuComponent implements OnInit {
           this.onUploadFile.emit(newFile);
         },
         error => console.log(error),
-        () => { this.uploadingFile = null; }
+        () => {
+          this.uploadingFile = null;
+        }
       );
   }
 
   createFolder() {
     const dialogRef = this.dialog.open(FolderDialogComponent);
-      dialogRef.afterClosed().subscribe(result => {
-        if (!result) {
-          return;
-        }
-        const folder = new Folder();
-        if (this.parentFolder) {
-          folder.parent_folder = this.parentFolder;
-        }
-        folder.name = result;
-        this.folderService.create(folder).subscribe(resultFolder => {
-          this.onCreateFolder.emit(resultFolder);
-        }, error => {
-          console.log(error);
-        });
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      const folder = new Folder();
+      if (this.parentFolder) {
+        folder.parent_folder = this.parentFolder;
+      }
+      folder.name = result;
+      this.folderService.create(folder).subscribe(resultFolder => {
+        this.onCreateFolder.emit(resultFolder);
+      }, error => {
+        console.log(error);
       });
+    });
   }
 
 }

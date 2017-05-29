@@ -1,13 +1,27 @@
-<div class="root-container" *ngIf="file">
-  <div class="title">
-    Uploading File
+<div class="root-container">
+  <div class="title-container">
+    <span class="title">Move to </span>
+    <span class="title-name">{{ currentFolder?.name }}</span>
+    <span class="title-name" *ngIf="!currentFolder">My Cloud</span>
   </div>
-  <div class="content">
-    <div class="file-name">
-      {{ file.name | titlecase }}
-    </div>
-    <md-progress-spinner mode="indeterminate">
-    </md-progress-spinner>
+  <div class="tree">
+    <md-nav-list dense>
+      <md-list-item *ngIf="currentFolder" (click)="changeFolder(previousFolder)">
+        <md-icon md-list-icon>arrow_back</md-icon>
+        <h4 md-line>{{ previousFolder?.name || 'My Cloud' }}</h4>
+      </md-list-item>
+      <md-list-item *ngFor="let childFolder of childFolders" (click)="changeFolder(childFolder)">
+        <md-icon md-list-icon>folder</md-icon>
+        <h4 md-line>{{ childFolder.name }}</h4>
+      </md-list-item>
+    </md-nav-list>
   </div>
-
+  <div class="button-container">
+    <button md-raised-button (click)="close()">
+      CANCEL
+    </button>
+    <button md-raised-button color="primary" (click)="move()" [disabled]="initialFolder?.id === currentFolder?.id">
+      MOVE HERE
+    </button>
+  </div>
 </div>

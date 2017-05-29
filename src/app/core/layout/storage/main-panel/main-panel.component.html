@@ -39,10 +39,10 @@
                 <!--<md-icon>file_download</md-icon>-->
                 <!--Download-->
               <!--</button>-->
-              <!--<button md-menu-item>-->
-                <!--<md-icon>folder</md-icon>-->
-                <!--Move-->
-              <!--</button>-->
+              <button md-menu-item (click)="move(folder)">
+                <md-icon>folder</md-icon>
+                Move
+              </button>
               <!--<button md-menu-item>-->
                 <!--<md-icon>share</md-icon>-->
                 <!--Share-->
@@ -87,10 +87,10 @@
                 <md-icon>mode_edit</md-icon>
                 Rename
               </button>
-              <!--<button md-menu-item>-->
-                <!--<md-icon>folder</md-icon>-->
-                <!--Move-->
-              <!--</button>-->
+              <button md-menu-item (click)="move(file)">
+                <md-icon>folder</md-icon>
+                Move
+              </button>
               <!--<button md-menu-item>-->
                 <!--<md-icon>share</md-icon>-->
                 <!--Share-->
@@ -107,7 +107,6 @@
         </md-list-item>
         <md-divider></md-divider>
       </div>
-
     </md-nav-list>
   </div>
 

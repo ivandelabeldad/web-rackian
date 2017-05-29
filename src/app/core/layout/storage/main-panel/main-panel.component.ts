@@ -10,7 +10,7 @@ import { FileService } from '../resources/file.service';
 import { FolderService } from '../resources/folder.service';
 import { FileDialogComponent } from './file-dialog/file-dialog.component';
 import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
-import { DownloadDialogComponent } from './download-dialog/download-dialog.component';
+import { MoveDialogComponent } from './move-dialog/move-dialog.component';
 
 
 @Component({
@@ -100,6 +100,22 @@ export class MainPanelComponent implements OnInit {
       }
       if (resourceModified instanceof Folder) {
         this.folderService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+      }
+    });
+  }
+
+  move(resource: File|Folder) {
+    const dialog = this.dialog.open(MoveDialogComponent, {
+      data: resource,
+      height: '350px',
+      width: '280px',
+    });
+    dialog.afterClosed().subscribe(r => {
+      if (r instanceof File) {
+        this.files = this.files.filter(file => file.id !== r.id);
+      }
+      if (r instanceof Folder) {
+        this.folders = this.folders.filter(folder => folder.id !== r.id);
       }
     });
   }
