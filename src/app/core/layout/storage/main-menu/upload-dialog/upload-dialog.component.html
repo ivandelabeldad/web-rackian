@@ -1,0 +1,13 @@
+<div class="root-container" *ngIf="file">
+  <div class="title">
+    Uploading File
+  </div>
+  <div class="content">
+    <div class="file-name">
+      <span [outerHTML]="file | fileIcon"></span>
+      <span class="file-name-text">{{ file.name | titlecase }}</span>
+    </div>
+    <md-progress-spinner mode="indeterminate">
+    </md-progress-spinner>
+  </div>
+</div>

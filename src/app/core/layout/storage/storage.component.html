@@ -1,0 +1,33 @@
+<div class="root-container">
+  <rackian-main-menu
+    (onUploadFile)='onUploadFile($event)'
+    (onCreateFolder)='onCreateFolder($event)'>
+  </rackian-main-menu>
+  <div class="content">
+    <rackian-info-panel
+      [selectedResource]='selectedResource'
+      fxHide.xs
+      fxFlex.sm="25"
+      fxFlex.md="25"
+      fxFlex.lg="20"
+      fxFlex.xl="15"
+      fxFlex.gt-xs="25">
+    </rackian-info-panel>
+    <div class="main-zone"
+         fxFlex.xs="100"
+         fxFlex.sm="75"
+         fxFlex.md="75"
+         fxFlex.lg="80"
+         fxFlex.xl="85"
+         fxFlex.gt-xs="75">
+      <rackian-breadcums></rackian-breadcums>
+      <rackian-main-panel
+        [files]="files"
+        [folders]="folders"
+        [selectedResource]='selectedResource'
+        (onSelectResource)='onSelectResource($event)'
+        (onChangeFolder)='onChangeFolder($event)'>
+      </rackian-main-panel>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+.root-container {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    height: 45px;
+}
+.breadcrumbs {
+  display: flex;
+  font-size: 18px;
+  font-weight: 300;
+  height: 100%;
+  overflow: hidden;
+  justify-content: flex-end;
+}
+
+.breadcrumbs * {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+a {
+  color: #616161;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
+  transition: 100ms;
+}
+
+a:hover {
+  background: #E0E0E0;
+}
+
+.material-icons {
+  color: #616161;
+  vertical-align: middle;
+  font-size: 20px;
+  width: 14px;
+}

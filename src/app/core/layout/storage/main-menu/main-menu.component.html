@@ -1,0 +1,62 @@
+<div class="root-container">
+    <nav color="primary">
+        <div fxLayout="row"
+             fxFlex.xs="100"
+             fxFlex.sm="25"
+             fxFlex.md="25"
+             fxFlex.lg="20"
+             fxFlex.xl="15"
+             fxFlex.gt-xs="25">
+            <a routerLink="/" fxFlex="100" md-menu-item class="title">
+                <span>Rackian</span>
+            </a>
+        </div>
+        <div fxLayout="row" fxHide.xs>
+            <input fxHide id="input-file-id" multiple type="file" (change)="fileUpload($event)">
+            <label md-menu-item for="input-file-id" class="md-menu-label">
+              <md-icon>file_upload</md-icon>
+              <span>Upload File</span>
+            </label>
+            <a md-menu-item (click)="createFolder()">
+                <md-icon>create_new_folder</md-icon>
+                <span>Create Folder</span>
+            </a>
+        </div>
+
+        <div class="spacer"></div>
+
+        <a class="profile-menu" md-menu-item [mdMenuTriggerFor]="userMenu" fxHide.xs>
+          <span>{{ user.getUsername() | titlecase }}</span>
+          <md-icon>account_circle</md-icon>
+        </a>
+        <md-menu #userMenu="mdMenu" xPosition="before">
+            <button md-menu-item [routerLink]="['/logout']">
+                <md-icon>exit_to_app</md-icon>
+                <span>Logout</span>
+            </button>
+        </md-menu>
+
+
+        <!--MOBILE MENU-->
+        <a class="mobile-menu" md-menu-item fxHide.gt-xs [mdMenuTriggerFor]="mobileMenu">
+            <md-icon style="margin: 0">more_vert</md-icon>
+        </a>
+
+        <md-menu #mobileMenu="mdMenu">
+          <input fxHide id="input-file-id-mobile" multiple type="file" (change)="fileUpload($event)">
+          <label md-menu-item for="input-file-id-mobile">
+            <md-icon>file_upload</md-icon>
+            <span>Upload File</span>
+          </label>
+            <button md-menu-item (click)="createFolder()">
+                <md-icon>create_new_folder</md-icon>
+                <span>Create Folder</span>
+            </button>
+            <button md-menu-item [routerLink]="['/logout']">
+              <md-icon>exit_to_app</md-icon>
+              <span>Logout</span>
+            </button>
+        </md-menu>
+    </nav>
+</div>
+<rackian-upload-dialog [file]="uploadingFile"></rackian-upload-dialog>

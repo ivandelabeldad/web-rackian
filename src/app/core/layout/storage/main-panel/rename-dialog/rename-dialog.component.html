@@ -1,0 +1,17 @@
+<div>
+  <span class="title">Rename</span>
+</div>
+<md-input-container>
+  <input mdInput type="text" placeholder="New name" #input (onchange)="removeError()" value="{{ resource.name }}">
+</md-input-container>
+<div class="error">
+  <label *ngIf="nameError">The name cannot be empty.</label>
+</div>
+<div class="button-container">
+  <button md-raised-button (click)="cancel()">
+    CANCEL
+  </button>
+  <button md-raised-button color="primary" (click)="save(input.value)">
+    SAVE
+  </button>
+</div>
