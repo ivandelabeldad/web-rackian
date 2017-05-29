@@ -12,7 +12,7 @@ import {
   MdInputModule,
   MdListModule,
   MdRippleModule,
-  MdCheckboxModule,
+  MdCheckboxModule, MdDialogModule, MdCommonModule,
 } from '@angular/material';
 
 @NgModule({
@@ -31,6 +31,8 @@ import {
     MdRippleModule,
     MdCheckboxModule,
     MdCardModule,
+    MdDialogModule,
+    MdCommonModule,
   ],
 })
 export class MaterialModule {

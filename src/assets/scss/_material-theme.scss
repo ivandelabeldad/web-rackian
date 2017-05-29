@@ -2,10 +2,32 @@
 
 @include mat-core();
 
-$my-app-primary: mat-palette($mat-blue, 700, 900, A100);
-$my-app-accent: mat-palette($mat-blue-grey, 700, 900, 400);
-$my-app-warn: mat-palette($mat-red, 500, A700, A100);
+$my-app-primary: mat-palette($mat-blue, 700, A100, 900);
+$my-app-accent: mat-palette($mat-blue-grey, 700, 400, 900);
+$my-app-warn: mat-palette($mat-red, 500, A100, A700);
 
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 
 @include angular-material-theme($my-app-theme);
+
+
+.mat-dialog-container {
+  max-width: 100vw !important;
+}
+
+
+i.mdi {
+  color: #757575;
+  font-size: 23px;
+  margin-right: 5px;
+  vertical-align: middle;
+  height: 36px;
+  width: 36px;
+  border-radius: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+.active i.mdi {
+  background: #fff;
+}

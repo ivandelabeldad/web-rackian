@@ -11,7 +11,6 @@ import { SharedModule } from '../shared/shared.module';
   exports: [
     LayoutModule,
   ],
-  declarations: [],
 })
 export class CoreModule {
 }

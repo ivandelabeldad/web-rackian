@@ -9,13 +9,14 @@ import { AuthenticatedGuard } from '../../shared/authentication/authenticated.gu
 import { LoginModule } from './authentication/authentication.module';
 import { LayoutSharedModule } from './shared/layout-shared.module';
 import { LogoutComponent } from './authentication/logout/logout.component';
-import { MainComponent } from './main/main.component';
-import { MainModule } from './main/main.module';
+import { StorageComponent } from './storage/storage.component';
+import { MainModule } from './storage/storage.module';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'storage', pathMatch: 'full' },
-  { path: 'storage', component: MainComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
+  { path: 'storage', component: StorageComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
+  { path: 'storage/folder/:id', component: StorageComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
   { path: 'logout', component: LogoutComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
 ];
