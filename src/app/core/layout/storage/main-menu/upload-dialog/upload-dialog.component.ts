@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { File } from '../../resources/File';
+import { File } from '../../resources/file';
 
 @Component({
   selector: 'rackian-upload-dialog',

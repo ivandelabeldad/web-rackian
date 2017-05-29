@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { ResponseContentType, Headers } from '@angular/http';
 
 import { Folder } from './folder';
 import { File } from './file';
@@ -74,6 +75,16 @@ export class FolderService {
       body.parent_folder = folder.parent_folder.toString();
     }
     return this.http.post(url, body).map(res => Folder.createFromJson(res.json()));
+  }
+
+  getFolderData(folder: Folder): Observable<Blob> {
+    const url = `${conf.url.api.downloads}${folder.id}`;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(url, {
+      responseType: ResponseContentType.Blob,
+      headers: headers,
+    }).map(data => new Blob([data.blob()], { type: 'application/octet-stream' }));
   }
 
   remove(folder: Folder): Observable<null> {

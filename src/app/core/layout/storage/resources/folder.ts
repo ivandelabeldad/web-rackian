@@ -11,6 +11,7 @@ export class Folder {
   public parent_folder: string;
   public mime_type = '';
   public size = '';
+  public link: string;
 
   public static createFromJson(json: any): Folder {
     const folder = new Folder();
@@ -21,6 +22,7 @@ export class Folder {
     folder.created_at = json.created_at || null;
     folder.updated_at = json.updated_at || null;
     folder.parent_folder = json.parent_folder || '';
+    folder.link = json.link || '';
     return folder;
   }
 

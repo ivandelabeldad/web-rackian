@@ -35,11 +35,11 @@ export class FileService {
     const url = `${conf.url.api.downloads}${file.id}`;
     console.log(url);
     const headers = new Headers();
-    headers.append('Content-Type', file.mime_type);
+    headers.append('Content-Type', 'application/json');
     return this.http.get(url, {
       responseType: ResponseContentType.Blob,
       headers: headers,
-    }).map(data => new Blob([data.blob()], { type: file.mime_type }));
+    }).map(data => new Blob([data.blob()], { type: 'application/octet-stream' }));
   }
 
   remove(file: File): Observable<null> {

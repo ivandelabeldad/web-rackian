@@ -70,7 +70,21 @@ export class MainPanelComponent implements OnInit {
     this.downloadingFile = file;
     this.fileService.getFileData(file).subscribe(blob => {
       FileSaver.saveAs(blob, file.name + file.extension, true);
-    }, e => console.log(e),
+      this.downloadingFile = null;
+    }, e => {
+      console.log(e);
+      this.downloadingFile = null;
+    });
+  }
+
+  downloadFolder(folder: Folder) {
+    this.downloadingFile = new File();
+    this.downloadingFile.name = folder.name;
+    this.downloadingFile.extension = '';
+    this.downloadingFile.mime_type = 'text/folder';
+    this.folderService.getFolderData(folder).subscribe(blob => {
+        FileSaver.saveAs(blob, folder.name + '.zip', true);
+      }, e => console.log(e),
       () => this.downloadingFile = null);
   }
 

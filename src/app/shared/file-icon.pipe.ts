@@ -37,6 +37,9 @@ export class FileIconPipe implements PipeTransform {
       || value.mime_type.includes('video')) {
       icon = 'file-video';
     }
+    if (value.mime_type.includes('text/folder')) {
+      icon = 'folder';
+    }
     if (!icon) {
       icon = 'file';
     }
@@ -52,7 +55,8 @@ type Icon =
   'file-pdf' |
   'file-music' |
   'file-document' |
-  'file-video';
+  'file-video' |
+  'folder';
 
 class IconTag {
 
@@ -64,6 +68,9 @@ class IconTag {
   }
 
   static guessColor(icon: Icon) {
+    if (icon === 'folder') {
+      return '#757575';
+    }
     if (icon === 'file-image') {
       return '#F57C00';
     }

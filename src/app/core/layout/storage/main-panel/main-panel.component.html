@@ -28,19 +28,20 @@
           <div class="element-size" fxFlex.xs="10" fxFlex.gt-xs="5">
             <md-menu class="dropdown-menu" #appMenu2>
               <button md-menu-item (click)="changeFolder(folder)">
-                <md-icon>open_in_new</md-icon>
+                <md-icon>arrow_forward</md-icon>
                 Open
               </button>
               <button md-menu-item (click)="rename(folder)">
                 <md-icon>mode_edit</md-icon>
                 Rename
               </button>
-              <!--<button md-menu-item>-->
-                <!--<md-icon>file_download</md-icon>-->
-                <!--Download-->
-              <!--</button>-->
+              <button md-menu-item (click)="downloadFolder(folder)">
+                <md-icon>file_download</md-icon>
+                Download
+              </button>
               <button md-menu-item (click)="move(folder)">
-                <md-icon>folder</md-icon>
+                <!--<md-icon>folder</md-icon>-->
+                <i class="mdi mdi-folder-move"></i>
                 Move
               </button>
               <!--<button md-menu-item>-->
@@ -88,7 +89,8 @@
                 Rename
               </button>
               <button md-menu-item (click)="move(file)">
-                <md-icon>folder</md-icon>
+                <!--<md-icon>folder</md-icon>-->
+                <i class="mdi mdi-folder-move"></i>
                 Move
               </button>
               <!--<button md-menu-item>-->

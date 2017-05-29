@@ -40,14 +40,14 @@
                {{ selectedResource.updated_at | date:'medium' }}
            </div>
         </div>
-       <div *ngIf="selectedResource?.getParentFolder()" class="list-item" fxLayout.sm="column">
-           <div class="title" fxFlex.gt-sm="50">
-               Location
-           </div>
-           <div class="value" fxFlex.gt-sm="50">
-               {{ selectedResource.getParentFolder() }}
-           </div>
-        </div>
+       <!--<div *ngIf="selectedResource?.getParentFolder()" class="list-item" fxLayout.sm="column">-->
+           <!--<div class="title" fxFlex.gt-sm="50">-->
+               <!--Location-->
+           <!--</div>-->
+           <!--<div class="value" fxFlex.gt-sm="50">-->
+               <!--{{ selectedResource.getParentFolder() }}-->
+           <!--</div>-->
+        <!--</div>-->
         <div *ngIf="selectedResource?.description" class="list-item" fxLayout.sm="column">
             <div class="title" fxFlex.gt-sm="50">
                 Description
