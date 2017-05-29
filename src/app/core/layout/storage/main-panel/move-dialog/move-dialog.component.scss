@@ -1,0 +1,60 @@
+.root-container {
+  margin: -24px;
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  overflow: hidden;
+}
+.button-container {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+.title-container {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 24px;
+  background-color: #eee;
+}
+.tree {
+  overflow: auto;
+  flex-grow: 1;
+}
+md-icon {
+  color: #757575;
+}
+h4 {
+  color: #424242;
+}
+
+.title {
+  font-size: 1rem;
+  color: #424242;
+  font-weight: 400;
+}
+.title-name {
+  margin-left: 3px;
+  font-size: 1.25rem;
+  color: #424242;
+  font-weight: 300;
+}
+
+md-input-container {
+  margin-top: 20px;
+  width: 300px;
+  margin-bottom: 5px;
+}
+
+.error {
+  color: #F44336;
+  margin-bottom: 30px;
+}
+
+.button-container {
+  text-align: right;
+  padding: 10px;
+}
+
+.button-container button {
+  margin-left: 10px;
+}

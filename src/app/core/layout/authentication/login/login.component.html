@@ -1,0 +1,67 @@
+<div class="root-container">
+
+  <div class="background"></div>
+
+  <md-card>
+    <form action="">
+
+      <md-progress-bar
+        mode="indeterminate"
+        *ngIf="loading">
+      </md-progress-bar>
+      <md-progress-bar
+        mode="determinate"
+        value="100"
+        *ngIf="!loading">
+      </md-progress-bar>
+
+      <md-card-header>
+        <md-card-title class="brand">
+          Rackian Cloud
+        </md-card-title>
+        <md-card-title>
+          Sign In
+        </md-card-title>
+        <md-card-subtitle *ngIf="!error">
+          to continue to your Cloud
+        </md-card-subtitle>
+        <md-card-subtitle class="error" *ngIf="error">
+          Wrong Credentials
+        </md-card-subtitle>
+      </md-card-header>
+
+      <md-card-content>
+        <div>
+          <md-input-container>
+            <md-error></md-error>
+            <input mdInput placeholder="Username" [(ngModel)]="username" name="username"
+                   [disabled]="loading" required>
+          </md-input-container>
+        </div>
+        <div>
+          <md-input-container>
+            <md-error></md-error>
+            <input mdInput type="password" placeholder="Password" [(ngModel)]="password" name="password"
+                   [disabled]="loading" required>
+          </md-input-container>
+        </div>
+        <div class="checkbox">
+          <md-checkbox color="primary" [disabled]="loading" [checked]="remember">
+            Remember me
+          </md-checkbox>
+        </div>
+      </md-card-content>
+      <md-card-actions [ngClass]="{'card-border' : !loading}">
+        <div class="create-account">
+          <a href="{{ registerUrl }}">Create an account</a>
+        </div>
+        <button type="submit" [disabled]="loading" md-raised-button color="primary" (click)="login()">
+          NEXT
+        </button>
+      </md-card-actions>
+
+
+    </form>
+  </md-card>
+
+</div>
