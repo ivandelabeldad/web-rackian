@@ -4,7 +4,7 @@ export class File {
   public url: string;
   public name: string;
   public description: string;
-  public size: string;
+  public size: number;
   public mime_type: string;
   public created_at: string;
   public updated_at: string;
@@ -18,7 +18,7 @@ export class File {
     file.id = json.id || '';
     file.name = json.name || '';
     file.description = json.description || '';
-    file.size = json.size || '';
+    file.size = json.size || null;
     file.mime_type = json.mime_type || '';
     file.created_at = json.created_at || null;
     file.updated_at = json.updated_at || null;

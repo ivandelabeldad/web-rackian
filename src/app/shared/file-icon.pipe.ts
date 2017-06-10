@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { File } from '../core/layout/storage/resources/file';
+import { Folder } from '../core/layout/storage/resources/folder';
 
 
 @Pipe({
@@ -11,7 +12,10 @@ export class FileIconPipe implements PipeTransform {
 
   constructor(private sanitized: DomSanitizer) {}
 
-  transform(value: File, args?: any): any {
+  transform(value: File | Folder, args?: any): any {
+    if (value instanceof Folder) {
+      return this.sanitized.bypassSecurityTrustHtml(IconTag.getTag('folder'));
+    }
     let icon: Icon;
     if (value.mime_type.includes('image')) {
       icon = 'file-image';

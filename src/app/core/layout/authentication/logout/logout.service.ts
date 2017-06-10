@@ -13,7 +13,7 @@ export class LogoutService {
   public logout() {
     this.user.clear();
     this.token.clear();
-    this.router.navigate(['login']);
+    this.router.navigate(['/login']);
   }
 
 }

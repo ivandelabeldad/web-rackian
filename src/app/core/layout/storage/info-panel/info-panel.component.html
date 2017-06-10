@@ -40,14 +40,6 @@
                {{ selectedResource.updated_at | date:'medium' }}
            </div>
         </div>
-       <!--<div *ngIf="selectedResource?.getParentFolder()" class="list-item" fxLayout.sm="column">-->
-           <!--<div class="title" fxFlex.gt-sm="50">-->
-               <!--Location-->
-           <!--</div>-->
-           <!--<div class="value" fxFlex.gt-sm="50">-->
-               <!--{{ selectedResource.getParentFolder() }}-->
-           <!--</div>-->
-        <!--</div>-->
         <div *ngIf="selectedResource?.description" class="list-item" fxLayout.sm="column">
             <div class="title" fxFlex.gt-sm="50">
                 Description
@@ -56,5 +48,24 @@
                 {{ selectedResource.description }}
             </div>
         </div>
+  </div>
+  <div class="space">
+    <span *ngIf="!user.getSpace()"> 0 &nbsp;</span>
+    <span *ngIf="user.getSpace()">{{ user.getSpace() | fileSize:0 }} &nbsp;</span>
+    <span> / {{ user.getSpaceTotal() | fileSize:0 }}</span>
+    <div class="spinners">
+      <md-progress-spinner
+        class="fake-spinner"
+        mode="determinate"
+        value="100">
+      </md-progress-spinner>
+
+      <md-progress-spinner
+        class="space-spinner"
+        color="primary"
+        mode="determinate"
+        [value]="spacePercentage">
+      </md-progress-spinner>
     </div>
+  </div>
 </div>

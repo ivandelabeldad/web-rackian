@@ -6,12 +6,13 @@ import { Folder } from './folder';
 import { AuthHttpService } from '../../../../shared/authentication/auth-http.service';
 import { conf } from '../../../../conf';
 import { File } from './file';
+import { User } from '../../../../shared/authentication/user';
 
 
 @Injectable()
 export class FileService {
 
-  constructor(private http: AuthHttpService) { }
+  constructor(private http: AuthHttpService, private user: User) { }
 
   getFiles(folder?: Folder, url?: string): Observable<File[]> {
     folder = folder || new Folder();
@@ -43,7 +44,8 @@ export class FileService {
   }
 
   remove(file: File): Observable<null> {
-    return this.http.delete(file.url.toString());
+    const observable = this.http.delete(file.url.toString());
+    return observable;
   }
 
   update(file: File): Observable<File> {

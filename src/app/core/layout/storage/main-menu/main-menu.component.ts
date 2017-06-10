@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Headers } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 import { MdDialog } from '@angular/material';
@@ -11,6 +11,7 @@ import { Folder } from '../resources/folder';
 import { FolderDialogComponent } from './folder-dialog/folder-dialog.component';
 import { FolderService } from '../resources/folder.service';
 import { User } from '../../../../shared/authentication/user';
+import { InfoDialogService } from '../../info-dialog/info-dialog.service';
 
 
 @Component({
@@ -25,14 +26,17 @@ export class MainMenuComponent implements OnInit {
   public onUploadFile: EventEmitter<FileResource> = new EventEmitter<FileResource>();
   @Output()
   public onCreateFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
-  public uploadingFile: FileResource;
   private parentFolder: string;
+
+  @ViewChild('uploadInput') uploadInputElRef: ElementRef;
+  @ViewChild('uploadInputMobile') uploadInputMobileElRef: ElementRef;
 
   constructor(private folderService: FolderService,
               private userService: User,
               private http: AuthHttpService,
               private activatedRoute: ActivatedRoute,
-              private dialog: MdDialog) {
+              private dialog: MdDialog,
+              private infoDialogService: InfoDialogService) {
   }
 
   ngOnInit() {
@@ -56,7 +60,9 @@ export class MainMenuComponent implements OnInit {
     fileResouce.name = file.name;
     fileResouce.mime_type = file.type;
     fileResouce.extension = file.name.substring(file.name.lastIndexOf('.'));
-    this.uploadingFile = fileResouce;
+
+    this.infoDialogService.init('Uploading File', fileResouce);
+
     const formData: FormData = new FormData();
     formData.append('link', file);
     formData.append('mime_type', file.type);
@@ -65,6 +71,17 @@ export class MainMenuComponent implements OnInit {
     }
     const headers = new Headers();
     headers.append('Accept', 'application/json');
+
+
+    // CLEAN INPUT
+    this.uploadInputElRef.nativeElement.value = '';
+    this.uploadInputMobileElRef.nativeElement.value = '';
+
+    if (file.size > this.user.getSpaceAvailable()) {
+      this.infoDialogService.finishWithErrors('Error', 'Not enough space.');
+      return;
+    }
+
     this.http.post(`${conf.url.api.files}`, formData, { headers })
       .map(res => res.json())
       .catch(error => Observable.throw(error))
@@ -72,10 +89,17 @@ export class MainMenuComponent implements OnInit {
         data => {
           const newFile = FileResource.createFromJson(data);
           this.onUploadFile.emit(newFile);
+          this.user.setSpace(this.user.getSpace() + newFile.size);
+
+          this.infoDialogService.finish('File Uploaded', 'File uploaded successfully.');
         },
-        error => console.log(error),
-        () => {
-          this.uploadingFile = null;
+        (error) => {
+          console.log(error);
+          if (error.json().error === 'Not enough space') {
+            this.infoDialogService.finishWithErrors('Error', 'Not enough space.');
+          } else {
+            this.infoDialogService.finishWithErrors('Error', 'There was some problem uploading the file.');
+          }
         }
       );
   }

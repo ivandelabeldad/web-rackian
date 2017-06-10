@@ -11,6 +11,8 @@ import { LayoutSharedModule } from './shared/layout-shared.module';
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { StorageComponent } from './storage/storage.component';
 import { MainModule } from './storage/storage.module';
+import { InfoDialogComponent } from './info-dialog/info-dialog.component';
+import { InfoDialogService } from './info-dialog/info-dialog.service';
 
 
 const routes: Routes = [
@@ -35,6 +37,13 @@ const routes: Routes = [
   declarations: [
     LayoutComponent,
     LoadingComponent,
+    InfoDialogComponent,
+  ],
+  entryComponents: [
+    InfoDialogComponent,
+  ],
+  providers: [
+    InfoDialogService,
   ],
 })
 export class LayoutModule {

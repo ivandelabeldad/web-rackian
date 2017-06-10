@@ -31,10 +31,8 @@ export class LoginService {
       .map(res => {
         this.user.setFromJson(res.json());
         if (remember) {
-          this.user.saveToLocalStorage();
           this.user.getToken().saveToLocalStorage();
         } else {
-          this.user.saveToSessionStorage();
           this.user.getToken().saveToSessionStorage();
         }
         return this.user;

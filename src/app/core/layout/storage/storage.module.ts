@@ -14,7 +14,6 @@ import { FileDialogComponent } from './main-panel/file-dialog/file-dialog.compon
 import { RenameDialogComponent } from './main-panel/rename-dialog/rename-dialog.component';
 import { UploadDialogComponent } from './main-menu/upload-dialog/upload-dialog.component';
 import { MoveDialogComponent } from './main-panel/move-dialog/move-dialog.component';
-import { DownloadDialogComponent } from './main-panel/download-dialog/download-dialog.component';
 
 
 @NgModule({
@@ -36,14 +35,12 @@ import { DownloadDialogComponent } from './main-panel/download-dialog/download-d
     RenameDialogComponent,
     UploadDialogComponent,
     MoveDialogComponent,
-    DownloadDialogComponent,
   ],
   entryComponents: [
     FolderDialogComponent,
     FileDialogComponent,
     RenameDialogComponent,
     MoveDialogComponent,
-    DownloadDialogComponent,
   ],
 })
 export class MainModule { }

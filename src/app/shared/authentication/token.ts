@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class Token {
 
+  private user_id;
   private storageKey = 'token';
   private key;
   private created;
@@ -36,10 +37,19 @@ export class Token {
     this.expires = expires;
   }
 
+  getUserId() {
+    return this.user_id;
+  }
+
+  setUserId(user_id) {
+    this.user_id = user_id;
+  }
+
   public setFromJson(json) {
     this.setKey(json.key);
     this.setCreated(new Date(json.created));
     this.setExpires(new Date(json.expires));
+    this.setUserId(json.user_id);
   }
 
   public saveToLocalStorage() {
@@ -48,6 +58,9 @@ export class Token {
 
   public saveToSessionStorage() {
     localStorage.setItem(this.storageKey, JSON.stringify(this));
+    window.addEventListener('unload', () => {
+      localStorage.removeItem(this.storageKey);
+    });
   }
 
   private loadFromStorage() {
@@ -62,6 +75,7 @@ export class Token {
   }
 
   public clear() {
+    this.setUserId(null);
     this.setKey(null);
     this.setCreated(null);
     this.setExpires(null);

@@ -11,6 +11,8 @@ import { FolderService } from '../resources/folder.service';
 import { FileDialogComponent } from './file-dialog/file-dialog.component';
 import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
 import { MoveDialogComponent } from './move-dialog/move-dialog.component';
+import { User } from '../../../../shared/authentication/user';
+import { InfoDialogService } from '../../info-dialog/info-dialog.service';
 
 
 @Component({
@@ -25,24 +27,25 @@ export class MainPanelComponent implements OnInit {
   @Input()
   public folders: Folder[];
   @Input()
-  public selectedResource: File|Folder;
+  public selectedResource: File | Folder;
   @Output()
-  public onSelectResource: EventEmitter<File|Folder> = new EventEmitter<File|Folder>();
+  public onSelectResource: EventEmitter<File | Folder> = new EventEmitter<File | Folder>();
   @Output()
   public onChangeFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
   public downloadingFile: File;
 
-  constructor(
-    private router: Router,
-    private fileService: FileService,
-    private folderService: FolderService,
-    private dialog: MdDialog,
-  ) { }
+  constructor(private router: Router,
+              private fileService: FileService,
+              private folderService: FolderService,
+              private dialog: MdDialog,
+              private user: User,
+              private infoDialogService: InfoDialogService,) {
+  }
 
   ngOnInit() {
   }
 
-  selectResource(resource: File|Folder) {
+  selectResource(resource: File | Folder) {
     this.selectedResource = resource;
     this.onSelectResource.emit(this.selectedResource);
   }
@@ -67,30 +70,28 @@ export class MainPanelComponent implements OnInit {
   }
 
   downloadFile(file: File) {
-    this.downloadingFile = file;
+    this.infoDialogService.init('Downloading File', file);
     this.fileService.getFileData(file).subscribe(blob => {
       FileSaver.saveAs(blob, file.name + file.extension, true);
-      this.downloadingFile = null;
+      this.infoDialogService.finish('File Downloaded', 'File downloaded successfully.');
     }, e => {
-      console.log(e);
-      this.downloadingFile = null;
+      this.infoDialogService.finishWithErrors('Error', 'There was some problem downloading the file. Try it later.');
     });
   }
 
   downloadFolder(folder: Folder) {
-    this.downloadingFile = new File();
-    this.downloadingFile.name = folder.name;
-    this.downloadingFile.extension = '';
-    this.downloadingFile.mime_type = 'text/folder';
+    this.infoDialogService.init('Downloading Folder', folder);
     this.folderService.getFolderData(folder).subscribe(blob => {
-        FileSaver.saveAs(blob, folder.name + '.zip', true);
-      }, e => console.log(e),
-      () => this.downloadingFile = null);
+      FileSaver.saveAs(blob, folder.name + '.zip', true);
+      this.infoDialogService.finish('Folder downloaded', 'Folder downloaded successfully.');
+    }, () => {
+      this.infoDialogService.finishWithErrors('Error', 'There was some problem downloading the folder.');
+    });
   }
 
   deleteFolder(folder: Folder) {
     this.folderService.remove(folder).subscribe(() => {
-      this.folders = this.folders.filter(f => f.id !== folder.id);
+      this.folders.splice(this.folders.indexOf(folder), 1);
     }, error => {
       console.log(error);
     });
@@ -98,13 +99,14 @@ export class MainPanelComponent implements OnInit {
 
   deleteFile(file: File) {
     this.fileService.remove(file).subscribe(() => {
-      this.files = this.files.filter(f => f.id !== file.id);
+      this.files.splice(this.files.indexOf(file), 1);
+      this.user.setSpace(this.user.getSpace() - file.size);
     }, error => {
       console.log(error);
     });
   }
 
-  rename(resource: File|Folder) {
+  rename(resource: File | Folder) {
     const dialog = this.dialog.open(RenameDialogComponent, {
       data: resource,
     });
@@ -118,7 +120,7 @@ export class MainPanelComponent implements OnInit {
     });
   }
 
-  move(resource: File|Folder) {
+  move(resource: File | Folder) {
     const dialog = this.dialog.open(MoveDialogComponent, {
       data: resource,
       height: '350px',

@@ -46,7 +46,7 @@
           </md-input-container>
         </div>
         <div class="checkbox">
-          <md-checkbox color="primary" [disabled]="loading" [checked]="remember">
+          <md-checkbox color="primary" [disabled]="loading" [checked]="remember" (change)="toggleRemember()">
             Remember me
           </md-checkbox>
         </div>

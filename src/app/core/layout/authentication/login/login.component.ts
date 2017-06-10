@@ -39,4 +39,8 @@ export class LoginComponent implements OnInit {
         }
       );
   }
+
+  toggleRemember() {
+    this.remember = !this.remember;
+  }
 }
