@@ -93,11 +93,15 @@
                 <i class="mdi mdi-folder-move"></i>
                 Move
               </button>
-              <!--<button md-menu-item>-->
-                <!--<md-icon>share</md-icon>-->
-                <!--Share-->
-              <!--</button>-->
-              <button md-menu-item (click)="deleteFile(file)">
+              <button md-menu-item (click)="stopShareFile(file)"*ngIf="file.share">
+                <md-icon>share</md-icon>
+                Stop sharing
+              </button>
+              <button md-menu-item (click)="shareFile(file)" *ngIf="!file.share">
+                <md-icon>share</md-icon>
+                Share
+              </button>
+              <button md-menu-item (click)="deleteFile(file)" >
                 <md-icon>delete</md-icon>
                 Remove
               </button>

@@ -17,7 +17,9 @@ export class StorageComponent implements OnInit {
   public folders: Folder[];
   public selectedResource: File|Folder;
 
-  constructor(private fileService: FileService, private folderService: FolderService, private activatedRoute: ActivatedRoute) { }
+  constructor(private fileService: FileService,
+              private folderService: FolderService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.files = [];
@@ -35,7 +37,13 @@ export class StorageComponent implements OnInit {
 
   updateResources(folder?: Folder) {
     this.folderService.getFolders(folder).subscribe(folders => this.folders = folders.sort(Folder.sortByName));
-    this.fileService.getFiles(folder).subscribe(files => this.files = files.sort(File.sortByName));
+    // this.fileService.getFiles(folder).subscribe(files => this.files = files.sort(File.sortByName));
+    this.files = [];
+    this.fileService.getFiles(folder).subscribe(
+      files => this.files.push(...files),
+      error => console.log(error),
+      () => console.log(this.files)
+    );
   }
 
   onSelectResource(resource: File|Folder) {

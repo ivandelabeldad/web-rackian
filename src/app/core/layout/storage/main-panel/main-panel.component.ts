@@ -13,6 +13,7 @@ import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
 import { MoveDialogComponent } from './move-dialog/move-dialog.component';
 import { User } from '../../../../shared/authentication/user';
 import { InfoDialogService } from '../../info-dialog/info-dialog.service';
+import { ShareService } from '../share/share.service';
 
 
 @Component({
@@ -39,7 +40,8 @@ export class MainPanelComponent implements OnInit {
               private folderService: FolderService,
               private dialog: MdDialog,
               private user: User,
-              private infoDialogService: InfoDialogService,) {
+              private infoDialogService: InfoDialogService,
+              private shareService: ShareService) {
   }
 
   ngOnInit() {
@@ -134,5 +136,33 @@ export class MainPanelComponent implements OnInit {
         this.folders = this.folders.filter(folder => folder.id !== r.id);
       }
     });
+  }
+
+  shareFile(file: File) {
+    const obs = {
+      next: shareFile => {
+        file.share = shareFile;
+        this.infoDialogService.finish('File shared', shareFile.getRealLink());
+      },
+      error: value => {
+        this.infoDialogService.finishWithErrors('Error', 'The file cannot be shared.');
+      }
+    };
+    this.infoDialogService.init('Sharing file', file);
+    this.shareService.create(file).subscribe(obs);
+  }
+
+  stopShareFile(file: File) {
+    const obs = {
+      next: () => {
+        file.share = null;
+        this.infoDialogService.finish('Link deleted', 'The link was deleted successfully.');
+      },
+      error: () => {
+        this.infoDialogService.finishWithErrors('Error', 'The link cannot be deleted.');
+      }
+    };
+    this.infoDialogService.init('Removing shared link', file);
+    this.shareService.remove(file.share).subscribe(obs);
   }
 }
