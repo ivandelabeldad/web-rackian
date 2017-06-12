@@ -1,42 +1,39 @@
 <div class="root-container">
     <div class="list">
         <div *ngIf="selectedResource?.name" class="list-item" fxLayout.sm="column">
-            <div class="title" fxFlex.gt-sm="50">
-                Name
-            </div>
-            <div class="value" fxFlex.gt-sm="50">
+            <div class="value name">
                 {{ selectedResource.name }}
             </div>
         </div>
        <div *ngIf="selectedResource?.size" class="list-item" fxLayout.sm="column">
-           <div class="title" fxFlex.gt-sm="50">
+           <div class="title" fxFlex.gt-sm="40">
                Size
             </div>
-           <div class="value" fxFlex.gt-sm="50">
+           <div class="value" fxFlex.gt-sm="60">
                {{ selectedResource.size | fileSize }}
            </div>
         </div>
        <div *ngIf="selectedResource?.mime_type" class="list-item" fxLayout.sm="column">
-           <div class="title" fxFlex.gt-sm="50">
+           <div class="title" fxFlex.gt-sm="40">
                Type
             </div>
-           <div class="value" fxFlex.gt-sm="50">
+           <div class="value" fxFlex.gt-sm="60">
                {{ selectedResource.mime_type }}
            </div>
         </div>
        <div *ngIf="selectedResource?.created_at" class="list-item" fxLayout.sm="column">
-           <div class="title" fxFlex.gt-sm="50">
+           <div class="title" fxFlex.gt-sm="40">
                 Created
             </div>
-           <div class="value" fxFlex.gt-sm="50">
+           <div class="value" fxFlex.gt-sm="60">
                {{ selectedResource.created_at | date:'medium' }}
            </div>
         </div>
        <div *ngIf="selectedResource?.updated_at" class="list-item" fxLayout.sm="column">
-           <div class="title" fxFlex.gt-sm="50">
+           <div class="title" fxFlex.gt-sm="40">
                Updated
             </div>
-           <div class="value" fxFlex.gt-sm="50">
+           <div class="value" fxFlex.gt-sm="60">
                {{ selectedResource.updated_at | date:'medium' }}
            </div>
         </div>

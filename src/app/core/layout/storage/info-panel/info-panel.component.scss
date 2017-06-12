@@ -40,32 +40,39 @@
   justify-content: center;
   border-top: 1px solid #BDBDBD;
 }
+
 .space md-progress-spinner {
   margin-left: 10px;
 }
+
 .space md-progress-spinner, .fake-spinner, .fake-spinner svg {
   height: 35px;
   width: 35px;
 }
+
 .spinners {
   position: relative;
 }
+
 .spinners :first-child {
   z-index: 1;
 }
+
 .spinners :last-child {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-
 .list-item.share .value {
+  margin-left: -1px;
+  margin-top: 15px;
   display: flex;
   flex: 1 1 100% !important;
   overflow: hidden;
   align-items: center;
 }
+
 .list-item.share .value .link {
   flex-grow: 1;
   flex-shrink: 1;
@@ -81,6 +88,7 @@
   border: 1px solid #ccc;
   border-right: 0;
 }
+
 .list-item.share .value .button button {
   display: flex;
   align-items: center;
@@ -91,4 +99,13 @@
   background-color: #fff;
   cursor: pointer;
   outline: none;
+  color: #212121;
+}
+
+.list-item .value.name {
+  font-size: 1.25rem;
+}
+
+.list :first-child.list-item {
+  margin-top: 20px;
 }

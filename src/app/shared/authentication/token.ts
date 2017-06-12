@@ -57,10 +57,7 @@ export class Token {
   }
 
   public saveToSessionStorage() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this));
-    window.addEventListener('unload', () => {
-      localStorage.removeItem(this.storageKey);
-    });
+    sessionStorage.setItem(this.storageKey, JSON.stringify(this));
   }
 
   private loadFromStorage() {

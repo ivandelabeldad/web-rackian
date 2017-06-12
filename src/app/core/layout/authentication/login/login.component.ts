@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   username = '';
   password = '';
-  remember = false;
+  remember = true;
   error = false;
   registerUrl = conf.url.register.base;
 
