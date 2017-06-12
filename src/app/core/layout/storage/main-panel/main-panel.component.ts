@@ -1,7 +1,7 @@
 import { Input } from '@angular/core';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdSnackBar } from '@angular/material';
 import * as FileSaver from 'file-saver';
 
 import { File } from '../resources/file';
@@ -41,7 +41,8 @@ export class MainPanelComponent implements OnInit {
               private dialog: MdDialog,
               private user: User,
               private infoDialogService: InfoDialogService,
-              private shareService: ShareService) {
+              private shareService: ShareService,
+              private snackBar: MdSnackBar) {
   }
 
   ngOnInit() {
@@ -164,5 +165,11 @@ export class MainPanelComponent implements OnInit {
     };
     this.infoDialogService.init('Removing shared link', file);
     this.shareService.remove(file.share).subscribe(obs);
+  }
+
+  openSnackBar(text: string) {
+    this.snackBar.open(text, 'OK', {
+      duration: 3000,
+    });
   }
 }

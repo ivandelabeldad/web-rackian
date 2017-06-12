@@ -4,7 +4,7 @@
       <span>Name</span>
     </div>
     <div class="title-modified" fxFlex.xs="30" fxFlex.gt-xs="30">
-      <span fxHide.xs>Last </span><span>Modified</span>
+      <span fxHide.xs>Last</span> &nbsp; <span>Modified</span>
     </div>
     <div class="title-size" fxFlex.xs="0" fxFlex.gt-xs="15" fxHide.xs>
       <span>Size</span>
@@ -40,14 +40,9 @@
                 Download
               </button>
               <button md-menu-item (click)="move(folder)">
-                <!--<md-icon>folder</md-icon>-->
                 <i class="mdi mdi-folder-move"></i>
                 Move
               </button>
-              <!--<button md-menu-item>-->
-                <!--<md-icon>share</md-icon>-->
-                <!--Share-->
-              <!--</button>-->
               <button md-menu-item (click)="deleteFolder(folder)">
                 <md-icon>delete</md-icon>
                 Remove
@@ -65,7 +60,6 @@
         <md-list-item disableRipple="true" (click)="selectResource(file)" (dblclick)="openFile(file)" [ngClass]="{'active': file === selectedResource}">
           <div class="element-name" fxFlex.xs="60" fxFlex.gt-xs="50">
             <i [outerHTML]="file | fileIcon"></i>
-            <!--<md-icon>insert_drive_file</md-icon>-->
             <span>{{ file.name }}</span>
           </div>
           <div class="element-modified" fxFlex.xs="30" fxFlex.gt-xs="30">
@@ -76,10 +70,6 @@
           </div>
           <div class="element-size" fxFlex.xs="10" fxFlex.gt-xs="5">
             <md-menu class="dropdown-menu" #appMenu1="mdMenu">
-              <!--<button md-menu-item (click)="openFile(file)">-->
-                <!--<md-icon>open_in_new</md-icon>-->
-                <!--Open-->
-              <!--</button>-->
               <button md-menu-item (click)="downloadFile(file)">
                 <md-icon>file_download</md-icon>
                 Download
@@ -89,7 +79,6 @@
                 Rename
               </button>
               <button md-menu-item (click)="move(file)">
-                <!--<md-icon>folder</md-icon>-->
                 <i class="mdi mdi-folder-move"></i>
                 Move
               </button>
@@ -100,6 +89,10 @@
               <button md-menu-item (click)="shareFile(file)" *ngIf="!file.share">
                 <md-icon>share</md-icon>
                 Share
+              </button>
+              <button *ngIf="file.share" (click)="openSnackBar('Link copied to clipboard!')" md-menu-item ngxClipboard [cbContent]="file.share.getRealLink()" fxHide.gt-xs>
+                <md-icon>content_copy</md-icon>
+                Copy shared link
               </button>
               <button md-menu-item (click)="deleteFile(file)" >
                 <md-icon>delete</md-icon>

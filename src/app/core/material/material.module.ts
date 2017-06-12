@@ -16,6 +16,7 @@ import {
   MdDialogModule,
   MdCommonModule,
   MdTooltipModule,
+  MdSnackBarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -37,6 +38,7 @@ import {
     MdDialogModule,
     MdCommonModule,
     MdTooltipModule,
+    MdSnackBarModule,
   ],
 })
 export class MaterialModule {
