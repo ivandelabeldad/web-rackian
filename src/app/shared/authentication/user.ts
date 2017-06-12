@@ -12,7 +12,6 @@ export class User {
 
   private spaceObservable = new Subject();
 
-  // private storageKey = 'user';
   private id: string;
   private username: string;
   private email: string;
@@ -23,7 +22,6 @@ export class User {
   private space: number;
 
   constructor(private token: Token, private http: Http) {
-    // this.loadFromStorage();
     if (token.getUserId()) {
       this.initUser();
     }
@@ -143,27 +141,6 @@ export class User {
     this.setLastLogin(date);
   }
 
-  // public saveToLocalStorage() {
-  //   localStorage.setItem(this.storageKey, JSON.stringify(this));
-  // }
-  //
-  // public saveToSessionStorage() {
-  //   localStorage.setItem(this.storageKey, JSON.stringify(this));
-  // }
-  //
-  // private loadFromStorage() {
-  //   if (!this.isLogged()) {
-  //     if (localStorage.getItem(this.storageKey)) {
-  //       this.setFromJson(JSON.parse(localStorage.getItem(this.storageKey)));
-  //       return;
-  //     }
-  //     if (sessionStorage.getItem(this.storageKey)) {
-  //       this.setFromJson(JSON.parse(sessionStorage.getItem(this.storageKey)));
-  //       return;
-  //     }
-  //   }
-  // }
-
   public clear() {
     this.setId(null);
     this.setUsername(null);
@@ -173,8 +150,6 @@ export class User {
     this.setIsAdmin(null);
     this.setSpace(null);
     this.setLastLogin(null);
-    // localStorage.removeItem(this.storageKey);
-    // sessionStorage.removeItem(this.storageKey);
   }
 
 }
