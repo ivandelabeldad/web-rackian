@@ -14,6 +14,8 @@ import { FileDialogComponent } from './main-panel/file-dialog/file-dialog.compon
 import { RenameDialogComponent } from './main-panel/rename-dialog/rename-dialog.component';
 import { UploadDialogComponent } from './main-menu/upload-dialog/upload-dialog.component';
 import { MoveDialogComponent } from './main-panel/move-dialog/move-dialog.component';
+import { ShareModule } from './share/share.module';
+import { ShareFileComponent } from './share/share-file.component';
 
 
 @NgModule({
@@ -21,6 +23,7 @@ import { MoveDialogComponent } from './main-panel/move-dialog/move-dialog.compon
     SharedModule,
     LayoutSharedModule,
     ResourcesModule,
+    ShareModule,
     RouterModule,
   ],
   declarations: [
@@ -35,6 +38,7 @@ import { MoveDialogComponent } from './main-panel/move-dialog/move-dialog.compon
     RenameDialogComponent,
     UploadDialogComponent,
     MoveDialogComponent,
+    ShareFileComponent,
   ],
   entryComponents: [
     FolderDialogComponent,

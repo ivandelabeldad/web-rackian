@@ -64,3 +64,7 @@ span {
 .error-icon {
   color: #F44336;
 }
+.message {
+  word-wrap: break-word;
+  overflow: auto;
+}

@@ -37,6 +37,24 @@
                {{ selectedResource.updated_at | date:'medium' }}
            </div>
         </div>
+        <div class="list-item share" fxLayout="column"
+             [style.display]="selectedResource?.share ? 'inherit' : 'none'">
+          <div class="title" fxFlex="100">
+            Shared link
+          </div>
+          <div class="value" fxFlex="100">
+            <div class="link" *ngIf="selectedResource?.share">
+              {{ selectedResource?.share.getRealLink() }}
+            </div>
+            <div class="button">
+              <div mdTooltip="Link copied to clipboard!" mdTooltipPosition="below">
+                <button *ngIf="selectedResource?.share" ngxClipboard [cbContent]="selectedResource?.share.getRealLink()" (click)="showTooltip()">
+                  <md-icon>content_copy</md-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div *ngIf="selectedResource?.description" class="list-item" fxLayout.sm="column">
             <div class="title" fxFlex.gt-sm="50">
                 Description

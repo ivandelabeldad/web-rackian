@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { MdTooltip } from '@angular/material';
 
 import { Folder } from '../resources/folder';
 import { File } from '../resources/file';
@@ -12,14 +13,17 @@ import { User } from '../../../../shared/authentication/user';
 })
 export class InfoPanelComponent implements OnInit {
 
-  @Input()
-  public selectedResource: File|Folder;
+  @Input() public selectedResource: File|Folder;
+  @ViewChild(MdTooltip) public tooltip: MdTooltip;
 
   public spacePercentage = 0;
 
   constructor(public user: User) { }
 
   ngOnInit() {
+    this.tooltip.disabled = true;
+    this.tooltip.hideDelay = 999999999;
+    this.tooltip.showDelay = 999999999;
     this.updateSpacePercentage();
     this.user.getSpaceObservable().subscribe(() => this.updateSpacePercentage());
   }
@@ -30,6 +34,12 @@ export class InfoPanelComponent implements OnInit {
       space = 0;
     }
     this.spacePercentage = space;
+  }
+
+  showTooltip() {
+    this.tooltip.disabled = false;
+    setTimeout(() => this.tooltip.show(0), 50);
+    setTimeout(() => this.tooltip.disabled = true, 2000);
   }
 
 }

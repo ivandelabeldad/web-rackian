@@ -44,6 +44,9 @@ export class FileIconPipe implements PipeTransform {
     if (value.mime_type.includes('text/folder')) {
       icon = 'folder';
     }
+    if (value.mime_type.includes('compressed')) {
+      icon = 'package';
+    }
     if (!icon) {
       icon = 'file';
     }
@@ -60,6 +63,7 @@ type Icon =
   'file-music' |
   'file-document' |
   'file-video' |
+  'package' |
   'folder';
 
 class IconTag {
@@ -92,6 +96,9 @@ class IconTag {
     }
     if (icon === 'file-video') {
       return '#00796B';
+    }
+    if (icon === 'package') {
+      return '#EC407A';
     }
     return '#0288D1';
   }

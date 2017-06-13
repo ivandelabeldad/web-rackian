@@ -1,7 +1,7 @@
 import { Input } from '@angular/core';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdSnackBar } from '@angular/material';
 import * as FileSaver from 'file-saver';
 
 import { File } from '../resources/file';
@@ -13,6 +13,7 @@ import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
 import { MoveDialogComponent } from './move-dialog/move-dialog.component';
 import { User } from '../../../../shared/authentication/user';
 import { InfoDialogService } from '../../info-dialog/info-dialog.service';
+import { ShareService } from '../share/share.service';
 
 
 @Component({
@@ -32,14 +33,15 @@ export class MainPanelComponent implements OnInit {
   public onSelectResource: EventEmitter<File | Folder> = new EventEmitter<File | Folder>();
   @Output()
   public onChangeFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
-  public downloadingFile: File;
 
   constructor(private router: Router,
               private fileService: FileService,
               private folderService: FolderService,
               private dialog: MdDialog,
               private user: User,
-              private infoDialogService: InfoDialogService,) {
+              private infoDialogService: InfoDialogService,
+              private shareService: ShareService,
+              private snackBar: MdSnackBar) {
   }
 
   ngOnInit() {
@@ -112,10 +114,10 @@ export class MainPanelComponent implements OnInit {
     });
     dialog.afterClosed().subscribe(resourceModified => {
       if (resourceModified instanceof File) {
-        this.fileService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+        this.fileService.update(resourceModified).subscribe(s => {}, e => {});
       }
       if (resourceModified instanceof Folder) {
-        this.folderService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+        this.folderService.update(resourceModified).subscribe(s => {}, e => {});
       }
     });
   }
@@ -133,6 +135,40 @@ export class MainPanelComponent implements OnInit {
       if (r instanceof Folder) {
         this.folders = this.folders.filter(folder => folder.id !== r.id);
       }
+    });
+  }
+
+  shareFile(file: File) {
+    const obs = {
+      next: shareFile => {
+        file.share = shareFile;
+        this.infoDialogService.finish('File shared', shareFile.getRealLink());
+      },
+      error: value => {
+        this.infoDialogService.finishWithErrors('Error', 'The file cannot be shared.');
+      }
+    };
+    this.infoDialogService.init('Sharing file', file);
+    this.shareService.create(file).subscribe(obs);
+  }
+
+  stopShareFile(file: File) {
+    const obs = {
+      next: () => {
+        file.share = null;
+        this.infoDialogService.finish('Link deleted', 'The link was deleted successfully.');
+      },
+      error: () => {
+        this.infoDialogService.finishWithErrors('Error', 'The link cannot be deleted.');
+      }
+    };
+    this.infoDialogService.init('Removing shared link', file);
+    this.shareService.remove(file.share).subscribe(obs);
+  }
+
+  openSnackBar(text: string) {
+    this.snackBar.open(text, 'OK', {
+      duration: 3000,
     });
   }
 }

@@ -27,6 +27,8 @@
   color: #424242;
   font-size: 13px;
   word-wrap: break-word;
+  overflow: auto;
+  flex: 1 1 100% !important;
 }
 
 .space {

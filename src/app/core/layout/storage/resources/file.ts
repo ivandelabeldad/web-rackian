@@ -1,3 +1,4 @@
+import { ShareFile } from '../share/share-file';
 export class File {
 
   public id: string;
@@ -11,6 +12,7 @@ export class File {
   public folder: string;
   public extension: string;
   public link: string;
+  public share: ShareFile;
 
   public static createFromJson(json: any): File {
     const file = new File();
@@ -24,7 +26,7 @@ export class File {
     file.updated_at = json.updated_at || null;
     file.folder = json.folder || null;
     file.link = json.link || '';
-    file.extension = json.extension || null;
+    file.extension = json.extension || '';
     return file;
   }
 

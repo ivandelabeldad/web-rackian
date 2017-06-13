@@ -13,6 +13,7 @@ import { StorageComponent } from './storage/storage.component';
 import { MainModule } from './storage/storage.module';
 import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 import { InfoDialogService } from './info-dialog/info-dialog.service';
+import { ShareFileComponent } from './storage/share/share-file.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'storage/folder/:id', component: StorageComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
   { path: 'logout', component: LogoutComponent, canActivate: [AuthenticatedGuard], pathMatch: 'full' },
+  { path: 'share/file/:id', component: ShareFileComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
