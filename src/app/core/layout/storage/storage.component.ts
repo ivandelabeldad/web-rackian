@@ -33,6 +33,7 @@ export class StorageComponent implements OnInit {
         this.updateResources(folder);
       }
     });
+    this.initArrowNavigation();
   }
 
   updateResources(folder?: Folder) {
@@ -63,5 +64,53 @@ export class StorageComponent implements OnInit {
 
   onChangeFolder(resource: Folder) {
     this.updateResources(resource);
+  }
+
+  initArrowNavigation() {
+    window.addEventListener('keydown', (evt) => {
+      if (this.files.length === 0 && this.folders.length === 0) {
+        return;
+      }
+      if (evt.key === 'ArrowUp') {
+        return this.up();
+      }
+      if (evt.key === 'ArrowDown') {
+        return this.down();
+      }
+    });
+  }
+
+  up() {
+    const resources = [...this.folders, ...this.files];
+    if (!this.selectedResource) {
+      this.selectedResource = resources[0];
+      return;
+    }
+    let previousIndex = -1;
+    resources.forEach((resource, i) => {
+      if (resource.id === this.selectedResource.id) {
+        previousIndex = i - 1;
+      }
+    });
+    if (previousIndex >= 0) {
+      this.selectedResource = resources[previousIndex];
+    }
+  }
+
+  down() {
+    const resources = [...this.folders, ...this.files];
+    if (!this.selectedResource) {
+      this.selectedResource = resources[0];
+      return;
+    }
+    let nextIndex = resources.length;
+    resources.forEach((resource, i) => {
+      if (resource.id === this.selectedResource.id) {
+        nextIndex = i + 1;
+      }
+    });
+    if (nextIndex < resources.length) {
+      this.selectedResource = resources[nextIndex];
+    }
   }
 }

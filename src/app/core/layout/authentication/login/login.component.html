@@ -3,8 +3,6 @@
   <div class="background"></div>
 
   <md-card>
-    <form action="">
-
       <md-progress-bar
         mode="indeterminate"
         *ngIf="loading">
@@ -35,18 +33,18 @@
           <md-input-container>
             <md-error></md-error>
             <input mdInput placeholder="Username" [(ngModel)]="username" name="username"
-                   [disabled]="loading" required>
+                   [disabled]="loading" required (keyup.enter)="login()">
           </md-input-container>
         </div>
         <div>
           <md-input-container>
             <md-error></md-error>
             <input mdInput type="password" placeholder="Password" [(ngModel)]="password" name="password"
-                   [disabled]="loading" required>
+                   [disabled]="loading" required (keyup.enter)="login()">
           </md-input-container>
         </div>
         <div class="checkbox">
-          <md-checkbox color="primary" [disabled]="loading" [checked]="remember" (change)="toggleRemember()">
+          <md-checkbox color="primary" [disabled]="loading" [checked]="remember" (change)="toggleRemember()" (keyup.enter)="login()">
             Remember me
           </md-checkbox>
         </div>
@@ -59,9 +57,6 @@
           NEXT
         </button>
       </md-card-actions>
-
-
-    </form>
   </md-card>
 
 </div>

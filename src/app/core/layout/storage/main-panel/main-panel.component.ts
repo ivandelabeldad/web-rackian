@@ -1,6 +1,6 @@
 import { Input } from '@angular/core';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import { MdDialog, MdSnackBar } from '@angular/material';
 import * as FileSaver from 'file-saver';
 
@@ -45,6 +45,7 @@ export class MainPanelComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initKeyboardDetection();
   }
 
   selectResource(resource: File | Folder) {
@@ -94,6 +95,10 @@ export class MainPanelComponent implements OnInit {
   deleteFolder(folder: Folder) {
     this.folderService.remove(folder).subscribe(() => {
       this.folders.splice(this.folders.indexOf(folder), 1);
+      if (folder === this.selectedResource) {
+        this.selectResource(null);
+      }
+      this.user.update().subscribe(() => {}, () => {});
     }, error => {
       console.log(error);
     });
@@ -103,6 +108,9 @@ export class MainPanelComponent implements OnInit {
     this.fileService.remove(file).subscribe(() => {
       this.files.splice(this.files.indexOf(file), 1);
       this.user.setSpace(this.user.getSpace() - file.size);
+      if (file === this.selectedResource) {
+        this.selectResource(null);
+      }
     }, error => {
       console.log(error);
     });
@@ -169,6 +177,19 @@ export class MainPanelComponent implements OnInit {
   openSnackBar(text: string) {
     this.snackBar.open(text, 'OK', {
       duration: 3000,
+    });
+  }
+
+  initKeyboardDetection() {
+    window.addEventListener('keydown', (evt) => {
+      if (evt.key === 'Enter' && this.selectedResource) {
+        if (this.selectedResource instanceof File) {
+          this.downloadFile(this.selectedResource);
+        }
+        if (this.selectedResource instanceof Folder) {
+          this.changeFolder(this.selectedResource);
+        }
+      }
     });
   }
 }

@@ -47,4 +47,19 @@ export class File {
   getParentFolder() {
     return this.folder;
   }
+
+  update(file: File) {
+    this.id = file.id;
+    this.url = file.url;
+    this.name = file.name;
+    this.description = file.description;
+    this.size = file.size;
+    this.mime_type = file.mime_type;
+    this.created_at = file.created_at;
+    this.updated_at = file.updated_at;
+    this.folder = file.folder;
+    this.extension = file.extension;
+    this.link = file.link;
+    this.share = file.share;
+  }
 }

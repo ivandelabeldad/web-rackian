@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import {Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter} from '@angular/core';
 import { MdTooltip } from '@angular/material';
 
 import { Folder } from '../resources/folder';
@@ -14,6 +14,7 @@ import { User } from '../../../../shared/authentication/user';
 export class InfoPanelComponent implements OnInit {
 
   @Input() public selectedResource: File|Folder;
+  @Output() public onSelectResource: EventEmitter<File | Folder> = new EventEmitter<File | Folder>();
   @ViewChild(MdTooltip) public tooltip: MdTooltip;
 
   public spacePercentage = 0;
@@ -42,4 +43,8 @@ export class InfoPanelComponent implements OnInit {
     setTimeout(() => this.tooltip.disabled = true, 2000);
   }
 
+  selectResource(resource: File|Folder) {
+    this.selectedResource = resource;
+    this.onSelectResource.emit(this.selectedResource);
+  }
 }

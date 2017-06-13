@@ -27,17 +27,28 @@ export class User {
     }
   }
 
-  initUser() {
+  initUser(): Observable<User> {
+    const subject = new Subject();
+
     const headersUser = new Headers();
     const optionsUser = new RequestOptions({ headers: headersUser });
 
     headersUser .append('Authorization', 'Token ' + this.token.getKey());
-    this.http.get(conf.url.api.user + this.token.getUserId(), optionsUser)
+    this.http.get(conf.url.api.user + this.token.getUserId() + '/', optionsUser)
       .map(res => {
         this.setFromJson(res.json());
-      }).catch(err => {
+        subject.next(this);
+        subject.complete();
+    }).catch(err => {
+      subject.error(err);
       return Observable.throw(err);
     }).subscribe();
+
+    return subject;
+  }
+
+  update(): Observable<User> {
+    return this.initUser();
   }
 
   getId(): string {

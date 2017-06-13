@@ -63,7 +63,10 @@
                 {{ selectedResource.description }}
             </div>
         </div>
+        <div class="empty" (click)="selectResource(null)">
+        </div>
   </div>
+
   <div class="space">
     <span *ngIf="!user.getSpace()"> 0 &nbsp;</span>
     <span *ngIf="user.getSpace()">{{ user.getSpace() | fileSize:0 }} &nbsp;</span>

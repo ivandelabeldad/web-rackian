@@ -6,6 +6,7 @@
   <div class="content">
     <rackian-info-panel
       [selectedResource]='selectedResource'
+      (onSelectResource)='onSelectResource($event)'
       fxHide.xs
       fxFlex.sm="30"
       fxFlex.md="25"

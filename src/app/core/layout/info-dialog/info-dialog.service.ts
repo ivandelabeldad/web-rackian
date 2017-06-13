@@ -35,6 +35,7 @@ export class InfoDialogService {
   }
 
   finish(title: string, message: string) {
+    this.show = true;
     this.title = title;
     this.message = message;
     this.resource = null;
@@ -43,6 +44,7 @@ export class InfoDialogService {
   }
 
   finishWithErrors(title: string, message: string) {
+    this.show = true;
     this.title = title;
     this.message = message;
     this.resource = null;

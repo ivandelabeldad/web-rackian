@@ -44,4 +44,16 @@ export class Folder {
     return this.parent_folder;
   }
 
+  update(folder: Folder) {
+    this.id = folder.id;
+    this.url = folder.url;
+    this.name = folder.name;
+    this.description = folder.description;
+    this.mime_type = folder.mime_type;
+    this.created_at = folder.created_at;
+    this.updated_at = folder.updated_at;
+    this.parent_folder = folder.parent_folder;
+    this.link = folder.link;
+    this.share = folder.share;
+  }
 }

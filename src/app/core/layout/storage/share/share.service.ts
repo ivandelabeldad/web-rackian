@@ -29,7 +29,7 @@ export class ShareService {
   }
 
   getShareFile(file: File): Observable<ShareFile|null> {
-    const url = `${conf.url.api.fileLink}?file=${file.id}/`;
+    const url = `${conf.url.api.fileLink}?file=${file.id}`;
     return this.http.get(url)
       .map(res => res.json())
       .map(data => {
