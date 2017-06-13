@@ -17,7 +17,7 @@ export class FileService {
 
   getFiles(folder?: Folder, url?: string): Observable<File[]> {
     folder = folder || new Folder();
-    url = url || conf.url.api.files + '?folder=' + folder.id;
+    url = url || `${conf.url.api.files}?folder=${folder.id}`;
 
     const subject = new Subject();
 
@@ -28,7 +28,7 @@ export class FileService {
 
   getFilesPackage(subject: Subject<any>, folder?: Folder, url?: string) {
     folder = folder || new Folder();
-    url = url || conf.url.api.files + '?folder=' + folder.id;
+    url = url || `${conf.url.api.files}?folder=${folder.id}`;
 
     this.http.get(url)
       .map(res => res.json())
@@ -53,7 +53,7 @@ export class FileService {
   }
 
   getFileData(file: File): Observable<Blob> {
-    const url = `${conf.url.api.downloads}${file.id}`;
+    const url = `${conf.url.api.downloads}${file.id}/`;
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get(url, {

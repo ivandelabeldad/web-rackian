@@ -33,7 +33,6 @@ export class MainPanelComponent implements OnInit {
   public onSelectResource: EventEmitter<File | Folder> = new EventEmitter<File | Folder>();
   @Output()
   public onChangeFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
-  public downloadingFile: File;
 
   constructor(private router: Router,
               private fileService: FileService,
@@ -115,10 +114,10 @@ export class MainPanelComponent implements OnInit {
     });
     dialog.afterClosed().subscribe(resourceModified => {
       if (resourceModified instanceof File) {
-        this.fileService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+        this.fileService.update(resourceModified).subscribe(s => {}, e => {});
       }
       if (resourceModified instanceof Folder) {
-        this.folderService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+        this.folderService.update(resourceModified).subscribe(s => {}, e => {});
       }
     });
   }

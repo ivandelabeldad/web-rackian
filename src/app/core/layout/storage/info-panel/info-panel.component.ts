@@ -24,7 +24,6 @@ export class InfoPanelComponent implements OnInit {
     this.tooltip.disabled = true;
     this.tooltip.hideDelay = 999999999;
     this.tooltip.showDelay = 999999999;
-    console.log(this.tooltip);
     this.updateSpacePercentage();
     this.user.getSpaceObservable().subscribe(() => this.updateSpacePercentage());
   }

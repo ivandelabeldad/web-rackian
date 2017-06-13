@@ -86,11 +86,11 @@
                 <md-icon>share</md-icon>
                 Stop sharing
               </button>
-              <button md-menu-item (click)="shareFile(file)" *ngIf="!file.share">
+              <button md-menu-item *ngIf="!file.share" (click)="shareFile(file)">
                 <md-icon>share</md-icon>
                 Share
               </button>
-              <button *ngIf="file.share" (click)="openSnackBar('Link copied to clipboard!')" md-menu-item ngxClipboard [cbContent]="file.share.getRealLink()" fxHide.gt-xs>
+              <button md-menu-item *ngIf="file.share" (click)="openSnackBar('Link copied to clipboard!')" ngxClipboard [cbContent]="file.share.getRealLink()" fxHide.gt-xs>
                 <md-icon>content_copy</md-icon>
                 Copy shared link
               </button>

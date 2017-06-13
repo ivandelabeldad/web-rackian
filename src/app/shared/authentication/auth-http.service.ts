@@ -43,7 +43,11 @@ export class AuthHttpService {
     this.logoutIfExpired();
     this.addToken(options);
     const observable = this.http.get(url, options);
-    observable.subscribe(() => {}, error => this.logoutIfUnauthorized(error));
+    observable.subscribe(() => {}, error => {
+      if (error.status === 401) {
+        this.logoutIfUnauthorized(error);
+      }
+    });
     return observable;
   }
 

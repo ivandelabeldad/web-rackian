@@ -44,7 +44,6 @@ export class StorageComponent implements OnInit {
         this.files = this.files.sort(File.sortByName);
       },
       error => console.log(error),
-      () => console.log(this.files)
     );
   }
 
