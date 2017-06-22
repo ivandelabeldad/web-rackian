@@ -1,6 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter} from '@angular/core';
+import { MdTooltip } from '@angular/material';
+
 import { Folder } from '../resources/folder';
 import { File } from '../resources/file';
+import { User } from '../../../../shared/authentication/user';
 
 
 @Component({
@@ -10,12 +13,38 @@ import { File } from '../resources/file';
 })
 export class InfoPanelComponent implements OnInit {
 
-  @Input()
-  public selectedResource: File|Folder;
+  @Input() public selectedResource: File|Folder;
+  @Output() public onSelectResource: EventEmitter<File | Folder> = new EventEmitter<File | Folder>();
+  @ViewChild(MdTooltip) public tooltip: MdTooltip;
 
-  constructor() { }
+  public spacePercentage = 0;
+
+  constructor(public user: User) { }
 
   ngOnInit() {
+    this.tooltip.disabled = true;
+    this.tooltip.hideDelay = 999999999;
+    this.tooltip.showDelay = 999999999;
+    this.updateSpacePercentage();
+    this.user.getSpaceObservable().subscribe(() => this.updateSpacePercentage());
   }
 
+  updateSpacePercentage() {
+    let space = 100 - Math.round(this.user.getSpaceAvailable() / this.user.getSpaceTotal() * 100);
+    if (isNaN(space)) {
+      space = 0;
+    }
+    this.spacePercentage = space;
+  }
+
+  showTooltip() {
+    this.tooltip.disabled = false;
+    setTimeout(() => this.tooltip.show(0), 50);
+    setTimeout(() => this.tooltip.disabled = true, 2000);
+  }
+
+  selectResource(resource: File|Folder) {
+    this.selectedResource = resource;
+    this.onSelectResource.emit(this.selectedResource);
+  }
 }

@@ -29,16 +29,26 @@ export class AuthHttpService {
     if (!this.user.isLogged()) {
       return;
     }
-    if (this.token.hasExpired()) {
-      this.router.navigate(['/logout']);
-    }
+    // if (this.token.hasExpired()) {
+    //   this.router.navigate(['/logout']);
+    // }
+  }
+
+  private logoutIfUnauthorized(error) {
+    this.router.navigate(['/logout']);
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
     options = options || new RequestOptions();
     this.logoutIfExpired();
     this.addToken(options);
-    return this.http.get(url, options);
+    const observable = this.http.get(url, options);
+    observable.subscribe(() => {}, error => {
+      if (error.status === 401) {
+        this.logoutIfUnauthorized(error);
+      }
+    });
+    return observable;
   }
 
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {

@@ -12,7 +12,11 @@ import {
   MdInputModule,
   MdListModule,
   MdRippleModule,
-  MdCheckboxModule, MdDialogModule, MdCommonModule,
+  MdCheckboxModule,
+  MdDialogModule,
+  MdCommonModule,
+  MdTooltipModule,
+  MdSnackBarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -33,6 +37,8 @@ import {
     MdCardModule,
     MdDialogModule,
     MdCommonModule,
+    MdTooltipModule,
+    MdSnackBarModule,
   ],
 })
 export class MaterialModule {

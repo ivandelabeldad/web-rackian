@@ -31,3 +31,12 @@ i.mdi {
 .active i.mdi {
   background: #fff;
 }
+.space-spinner path {
+  stroke: #42A5F5 !important;
+}
+.fake-spinner path {
+  stroke: #BDBDBD !important;
+}
+body {
+  overflow-x: hidden;
+}

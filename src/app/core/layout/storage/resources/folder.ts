@@ -1,4 +1,5 @@
 import { conf } from 'app/conf';
+import { ShareFolder } from '../share/share-folder';
 
 export class Folder {
 
@@ -12,6 +13,7 @@ export class Folder {
   public mime_type = '';
   public size = '';
   public link: string;
+  public share: ShareFolder;
 
   public static createFromJson(json: any): Folder {
     const folder = new Folder();
@@ -35,10 +37,23 @@ export class Folder {
   }
 
   constructor() {
+    this.id = '';
   }
 
   getParentFolder() {
     return this.parent_folder;
   }
 
+  update(folder: Folder) {
+    this.id = folder.id;
+    this.url = folder.url;
+    this.name = folder.name;
+    this.description = folder.description;
+    this.mime_type = folder.mime_type;
+    this.created_at = folder.created_at;
+    this.updated_at = folder.updated_at;
+    this.parent_folder = folder.parent_folder;
+    this.link = folder.link;
+    this.share = folder.share;
+  }
 }

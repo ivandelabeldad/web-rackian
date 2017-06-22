@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Token } from './token';
+import { Http, RequestOptions, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
+import { conf } from '../../conf';
 
 
 @Injectable()
 export class User {
 
-  private storageKey = 'user';
+  private spaceObservable = new Subject();
+
   private id: string;
   private username: string;
   private email: string;
@@ -15,8 +21,34 @@ export class User {
   private lastLogin: Date;
   private space: number;
 
-  constructor(private token: Token) {
-    this.loadFromStorage();
+  constructor(private token: Token, private http: Http) {
+    if (token.getUserId()) {
+      this.initUser();
+    }
+  }
+
+  initUser(): Observable<User> {
+    const subject = new Subject();
+
+    const headersUser = new Headers();
+    const optionsUser = new RequestOptions({ headers: headersUser });
+
+    headersUser .append('Authorization', 'Token ' + this.token.getKey());
+    this.http.get(conf.url.api.user + this.token.getUserId() + '/', optionsUser)
+      .map(res => {
+        this.setFromJson(res.json());
+        subject.next(this);
+        subject.complete();
+    }).catch(err => {
+      subject.error(err);
+      return Observable.throw(err);
+    }).subscribe();
+
+    return subject;
+  }
+
+  update(): Observable<User> {
+    return this.initUser();
   }
 
   getId(): string {
@@ -85,10 +117,26 @@ export class User {
 
   setSpace(space: number): void {
     this.space = space;
+    this.spaceObservable.next(this.space);
+  }
+
+  getSpaceAvailable(): number {
+    return conf.space - this.getSpace();
+  }
+
+  getSpaceTotal(): number {
+    return conf.space;
+  }
+
+  getSpaceObservable(): Observable<any> {
+    return this.spaceObservable;
   }
 
   public isLogged(): boolean {
-    return this.getId() !== undefined && this.getId() !== null;
+    if (!this.token) {
+      return false;
+    }
+    return this.token.getUserId() !== undefined && this.token.getUserId() !== null;
   }
 
   public setFromJson(json) {
@@ -104,27 +152,6 @@ export class User {
     this.setLastLogin(date);
   }
 
-  public saveToLocalStorage() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this));
-  }
-
-  public saveToSessionStorage() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this));
-  }
-
-  private loadFromStorage() {
-    if (!this.isLogged()) {
-      if (localStorage.getItem(this.storageKey)) {
-        this.setFromJson(JSON.parse(localStorage.getItem(this.storageKey)));
-        return;
-      }
-      if (sessionStorage.getItem(this.storageKey)) {
-        this.setFromJson(JSON.parse(sessionStorage.getItem(this.storageKey)));
-        return;
-      }
-    }
-  }
-
   public clear() {
     this.setId(null);
     this.setUsername(null);
@@ -134,8 +161,6 @@ export class User {
     this.setIsAdmin(null);
     this.setSpace(null);
     this.setLastLogin(null);
-    localStorage.removeItem(this.storageKey);
-    sessionStorage.removeItem(this.storageKey);
   }
 
 }

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   username = '';
   password = '';
-  remember = false;
+  remember = true;
   error = false;
   registerUrl = conf.url.register.base;
 
@@ -38,5 +38,9 @@ export class LoginComponent implements OnInit {
           this.error = true;
         }
       );
+  }
+
+  toggleRemember() {
+    this.remember = !this.remember;
   }
 }

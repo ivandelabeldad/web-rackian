@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { File } from '../core/layout/storage/resources/file';
+import { Folder } from '../core/layout/storage/resources/folder';
 
 
 @Pipe({
@@ -11,7 +12,10 @@ export class FileIconPipe implements PipeTransform {
 
   constructor(private sanitized: DomSanitizer) {}
 
-  transform(value: File, args?: any): any {
+  transform(value: File | Folder, args?: any): any {
+    if (value instanceof Folder) {
+      return this.sanitized.bypassSecurityTrustHtml(IconTag.getTag('folder'));
+    }
     let icon: Icon;
     if (value.mime_type.includes('image')) {
       icon = 'file-image';
@@ -40,6 +44,9 @@ export class FileIconPipe implements PipeTransform {
     if (value.mime_type.includes('text/folder')) {
       icon = 'folder';
     }
+    if (value.mime_type.includes('compressed')) {
+      icon = 'package';
+    }
     if (!icon) {
       icon = 'file';
     }
@@ -56,6 +63,7 @@ type Icon =
   'file-music' |
   'file-document' |
   'file-video' |
+  'package' |
   'folder';
 
 class IconTag {
@@ -88,6 +96,9 @@ class IconTag {
     }
     if (icon === 'file-video') {
       return '#00796B';
+    }
+    if (icon === 'package') {
+      return '#EC407A';
     }
     return '#0288D1';
   }

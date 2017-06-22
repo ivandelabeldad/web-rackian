@@ -1,0 +1,19 @@
+<div class="root-container" *ngIf="show">
+  <div class="title">
+    <span>{{ title }}</span>
+    <md-icon class="close" (click)="close()" *ngIf="status !== 'loading'">close</md-icon>
+  </div>
+  <div class="content">
+    <div class="file-name" *ngIf="resource">
+      <span [outerHTML]="resource | fileIcon"></span>
+      <span class="file-name-text">{{ resource.name | titlecase }}</span>
+    </div>
+    <div class="message" *ngIf="!file">
+      {{ message }}
+    </div>
+    <md-progress-spinner *ngIf="status === 'loading'" mode="indeterminate">
+    </md-progress-spinner>
+    <md-icon class="success-icon" *ngIf="status === 'success'">check_circle</md-icon>
+    <md-icon class="error-icon" *ngIf="status === 'error'">error</md-icon>
+  </div>
+</div>

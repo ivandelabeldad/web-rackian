@@ -1,7 +1,7 @@
 import { Input } from '@angular/core';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
-import { MdDialog } from '@angular/material';
+import { Router} from '@angular/router';
+import { MdDialog, MdSnackBar } from '@angular/material';
 import * as FileSaver from 'file-saver';
 
 import { File } from '../resources/file';
@@ -11,6 +11,9 @@ import { FolderService } from '../resources/folder.service';
 import { FileDialogComponent } from './file-dialog/file-dialog.component';
 import { RenameDialogComponent } from './rename-dialog/rename-dialog.component';
 import { MoveDialogComponent } from './move-dialog/move-dialog.component';
+import { User } from '../../../../shared/authentication/user';
+import { InfoDialogService } from '../../info-dialog/info-dialog.service';
+import { ShareService } from '../share/share.service';
 
 
 @Component({
@@ -25,24 +28,27 @@ export class MainPanelComponent implements OnInit {
   @Input()
   public folders: Folder[];
   @Input()
-  public selectedResource: File|Folder;
+  public selectedResource: File | Folder;
   @Output()
-  public onSelectResource: EventEmitter<File|Folder> = new EventEmitter<File|Folder>();
+  public onSelectResource: EventEmitter<File | Folder> = new EventEmitter<File | Folder>();
   @Output()
   public onChangeFolder: EventEmitter<Folder> = new EventEmitter<Folder>();
-  public downloadingFile: File;
 
-  constructor(
-    private router: Router,
-    private fileService: FileService,
-    private folderService: FolderService,
-    private dialog: MdDialog,
-  ) { }
-
-  ngOnInit() {
+  constructor(private router: Router,
+              private fileService: FileService,
+              private folderService: FolderService,
+              private dialog: MdDialog,
+              private user: User,
+              private infoDialogService: InfoDialogService,
+              private shareService: ShareService,
+              private snackBar: MdSnackBar) {
   }
 
-  selectResource(resource: File|Folder) {
+  ngOnInit() {
+    this.initKeyboardDetection();
+  }
+
+  selectResource(resource: File | Folder) {
     this.selectedResource = resource;
     this.onSelectResource.emit(this.selectedResource);
   }
@@ -67,30 +73,32 @@ export class MainPanelComponent implements OnInit {
   }
 
   downloadFile(file: File) {
-    this.downloadingFile = file;
+    this.infoDialogService.init('Downloading File', file);
     this.fileService.getFileData(file).subscribe(blob => {
       FileSaver.saveAs(blob, file.name + file.extension, true);
-      this.downloadingFile = null;
+      this.infoDialogService.finish('File Downloaded', 'File downloaded successfully.');
     }, e => {
-      console.log(e);
-      this.downloadingFile = null;
+      this.infoDialogService.finishWithErrors('Error', 'There was some problem downloading the file. Try it later.');
     });
   }
 
   downloadFolder(folder: Folder) {
-    this.downloadingFile = new File();
-    this.downloadingFile.name = folder.name;
-    this.downloadingFile.extension = '';
-    this.downloadingFile.mime_type = 'text/folder';
+    this.infoDialogService.init('Downloading Folder', folder);
     this.folderService.getFolderData(folder).subscribe(blob => {
-        FileSaver.saveAs(blob, folder.name + '.zip', true);
-      }, e => console.log(e),
-      () => this.downloadingFile = null);
+      FileSaver.saveAs(blob, folder.name + '.zip', true);
+      this.infoDialogService.finish('Folder downloaded', 'Folder downloaded successfully.');
+    }, () => {
+      this.infoDialogService.finishWithErrors('Error', 'There was some problem downloading the folder.');
+    });
   }
 
   deleteFolder(folder: Folder) {
     this.folderService.remove(folder).subscribe(() => {
-      this.folders = this.folders.filter(f => f.id !== folder.id);
+      this.folders.splice(this.folders.indexOf(folder), 1);
+      if (folder === this.selectedResource) {
+        this.selectResource(null);
+      }
+      this.user.update().subscribe(() => {}, () => {});
     }, error => {
       console.log(error);
     });
@@ -98,27 +106,31 @@ export class MainPanelComponent implements OnInit {
 
   deleteFile(file: File) {
     this.fileService.remove(file).subscribe(() => {
-      this.files = this.files.filter(f => f.id !== file.id);
+      this.files.splice(this.files.indexOf(file), 1);
+      this.user.setSpace(this.user.getSpace() - file.size);
+      if (file === this.selectedResource) {
+        this.selectResource(null);
+      }
     }, error => {
       console.log(error);
     });
   }
 
-  rename(resource: File|Folder) {
+  rename(resource: File | Folder) {
     const dialog = this.dialog.open(RenameDialogComponent, {
       data: resource,
     });
     dialog.afterClosed().subscribe(resourceModified => {
       if (resourceModified instanceof File) {
-        this.fileService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+        this.fileService.update(resourceModified).subscribe(s => {}, e => {});
       }
       if (resourceModified instanceof Folder) {
-        this.folderService.update(resourceModified).subscribe(s => console.log(s), e => console.log(e));
+        this.folderService.update(resourceModified).subscribe(s => {}, e => {});
       }
     });
   }
 
-  move(resource: File|Folder) {
+  move(resource: File | Folder) {
     const dialog = this.dialog.open(MoveDialogComponent, {
       data: resource,
       height: '350px',
@@ -130,6 +142,53 @@ export class MainPanelComponent implements OnInit {
       }
       if (r instanceof Folder) {
         this.folders = this.folders.filter(folder => folder.id !== r.id);
+      }
+    });
+  }
+
+  shareFile(file: File) {
+    const obs = {
+      next: shareFile => {
+        file.share = shareFile;
+        this.infoDialogService.finish('File shared', shareFile.getRealLink());
+      },
+      error: value => {
+        this.infoDialogService.finishWithErrors('Error', 'The file cannot be shared.');
+      }
+    };
+    this.infoDialogService.init('Sharing file', file);
+    this.shareService.create(file).subscribe(obs);
+  }
+
+  stopShareFile(file: File) {
+    const obs = {
+      next: () => {
+        file.share = null;
+        this.infoDialogService.finish('Link deleted', 'The link was deleted successfully.');
+      },
+      error: () => {
+        this.infoDialogService.finishWithErrors('Error', 'The link cannot be deleted.');
+      }
+    };
+    this.infoDialogService.init('Removing shared link', file);
+    this.shareService.remove(file.share).subscribe(obs);
+  }
+
+  openSnackBar(text: string) {
+    this.snackBar.open(text, 'OK', {
+      duration: 3000,
+    });
+  }
+
+  initKeyboardDetection() {
+    window.addEventListener('keydown', (evt) => {
+      if (evt.key === 'Enter' && this.selectedResource) {
+        if (this.selectedResource instanceof File) {
+          this.downloadFile(this.selectedResource);
+        }
+        if (this.selectedResource instanceof Folder) {
+          this.changeFolder(this.selectedResource);
+        }
       }
     });
   }

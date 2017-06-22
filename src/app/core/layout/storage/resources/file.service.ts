@@ -6,34 +6,54 @@ import { Folder } from './folder';
 import { AuthHttpService } from '../../../../shared/authentication/auth-http.service';
 import { conf } from '../../../../conf';
 import { File } from './file';
+import { ShareService } from '../share/share.service';
+import { Subject } from 'rxjs/Subject';
 
 
 @Injectable()
 export class FileService {
 
-  constructor(private http: AuthHttpService) { }
+  constructor(private http: AuthHttpService, private shareService: ShareService) { }
 
   getFiles(folder?: Folder, url?: string): Observable<File[]> {
     folder = folder || new Folder();
-    if (!folder.id) {
-      folder.id = '';
-    }
-    url = url || conf.url.api.files + '?folder=' + folder.id;
-    return this.http.get(url)
+    url = url || `${conf.url.api.files}?folder=${folder.id}`;
+
+    const subject = new Subject();
+
+    this.getFilesPackage(subject, folder, url);
+
+    return subject;
+  }
+
+  getFilesPackage(subject: Subject<any>, folder?: Folder, url?: string) {
+    folder = folder || new Folder();
+    url = url || `${conf.url.api.files}?folder=${folder.id}`;
+
+    this.http.get(url)
       .map(res => res.json())
-      .mergeMap(data => {
+      .subscribe(data => {
+        const files = data.results.map(e => File.createFromJson(e));
+        const elements = files.length;
+        let processed = 0;
+        files.forEach(file => {
+          this.shareService.getShareFile(file).subscribe(fileLink => {
+            file.share = fileLink;
+            subject.next([file]);
+            processed++;
+            if (processed === elements && !data.next) {
+              subject.complete();
+            }
+          });
+        });
         if (data.next) {
-          return this.getFiles(folder, data.next)
-            .map(resultsToJoin => [...data.results.map(e => File.createFromJson(e)), ...resultsToJoin]);
-        } else {
-          return Observable.of(data.results.map(e => File.createFromJson(e)));
+          this.getFilesPackage(subject, folder, data.next);
         }
       });
   }
 
   getFileData(file: File): Observable<Blob> {
-    const url = `${conf.url.api.downloads}${file.id}`;
-    console.log(url);
+    const url = `${conf.url.api.downloads}${file.id}/`;
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.get(url, {
@@ -43,12 +63,12 @@ export class FileService {
   }
 
   remove(file: File): Observable<null> {
-    return this.http.delete(file.url.toString());
+    const observable = this.http.delete(file.url.toString());
+    return observable;
   }
 
   update(file: File): Observable<File> {
     return this.http.patch(file.url.toString(), file).map(response => {
-      console.log(response);
       return File.createFromJson(response.json());
     });
   }
