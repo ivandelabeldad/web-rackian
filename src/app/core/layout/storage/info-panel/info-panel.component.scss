@@ -20,6 +20,7 @@
 
 .list-item {
   margin: 15px 15px 30px;
+  flex-shrink: 0;
 }
 
 .list-item .title {
@@ -40,7 +41,7 @@
 .space {
   padding: 15px;
   background-color: #f5f5f5;
-  flex-shrink: 1;
+  flex-shrink: 0;
   font-size: 14px;
   color: #424242;
   display: flex;

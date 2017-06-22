@@ -65,25 +65,27 @@
         </div>
         <div class="empty" (click)="selectResource(null)">
         </div>
+
+      <div class="space">
+        <span *ngIf="!user.getSpace()"> 0 &nbsp;</span>
+        <span *ngIf="user.getSpace()">{{ user.getSpace() | fileSize:0 }} &nbsp;</span>
+        <span> / {{ user.getSpaceTotal() | fileSize:0 }}</span>
+        <div class="spinners">
+          <md-progress-spinner
+            class="fake-spinner"
+            mode="determinate"
+            value="100">
+          </md-progress-spinner>
+
+          <md-progress-spinner
+            class="space-spinner"
+            color="primary"
+            mode="determinate"
+            [value]="spacePercentage">
+          </md-progress-spinner>
+        </div>
+      </div>
+
   </div>
 
-  <div class="space">
-    <span *ngIf="!user.getSpace()"> 0 &nbsp;</span>
-    <span *ngIf="user.getSpace()">{{ user.getSpace() | fileSize:0 }} &nbsp;</span>
-    <span> / {{ user.getSpaceTotal() | fileSize:0 }}</span>
-    <div class="spinners">
-      <md-progress-spinner
-        class="fake-spinner"
-        mode="determinate"
-        value="100">
-      </md-progress-spinner>
-
-      <md-progress-spinner
-        class="space-spinner"
-        color="primary"
-        mode="determinate"
-        [value]="spacePercentage">
-      </md-progress-spinner>
-    </div>
-  </div>
 </div>
