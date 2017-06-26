@@ -50,18 +50,19 @@ export class MainMenuComponent implements OnInit {
     });
   }
 
-  fileUpload(evt) {
+  fileUpload(evt, index = 0) {
     const fileList: FileList = evt.target.files;
     if (fileList.length <= 0) {
       return;
     }
-    const file: File = fileList[0];
-    const fileResouce = new FileResource();
-    fileResouce.name = file.name;
-    fileResouce.mime_type = file.type;
-    fileResouce.extension = file.name.substring(file.name.lastIndexOf('.'));
+    const file: File = fileList[index];
+    const fileResource = new FileResource();
+    fileResource.name = file.name;
+    fileResource.mime_type = file.type;
+    fileResource.extension = file.name.substring(file.name.lastIndexOf('.'));
 
-    this.infoDialogService.init('Uploading File', fileResouce);
+    console.log(fileResource);
+    this.infoDialogService.init('Uploading File', fileResource);
 
     const formData: FormData = new FormData();
     formData.append('link', file);
@@ -72,10 +73,6 @@ export class MainMenuComponent implements OnInit {
     const headers = new Headers();
     headers.append('Accept', 'application/json');
 
-
-    // CLEAN INPUT
-    this.uploadInputElRef.nativeElement.value = '';
-    this.uploadInputMobileElRef.nativeElement.value = '';
 
     if (file.size > this.user.getSpaceAvailable()) {
       this.infoDialogService.finishWithErrors('Error', 'Not enough space.');
@@ -91,7 +88,19 @@ export class MainMenuComponent implements OnInit {
           this.onUploadFile.emit(newFile);
           this.user.setSpace(this.user.getSpace() + newFile.size);
 
-          this.infoDialogService.finish('File Uploaded', 'File uploaded successfully.');
+          if (index < fileList.length - 1) {
+            this.infoDialogService.finish('File Uploaded', 'File uploaded successfully.');
+            this.fileUpload(evt, ++index);
+          } else {
+            if (fileList.length > 1) {
+              this.infoDialogService.finish('Files Uploaded', 'Files uploaded successfully.');
+            } else {
+              this.infoDialogService.finish('File Uploaded', 'File uploaded successfully.');
+            }
+            // CLEAN INPUT
+            this.uploadInputElRef.nativeElement.value = '';
+            this.uploadInputMobileElRef.nativeElement.value = '';
+          }
         },
         (error) => {
           console.log(error);
@@ -101,7 +110,7 @@ export class MainMenuComponent implements OnInit {
             this.infoDialogService.finishWithErrors('Error', 'There was some problem uploading the file.');
           }
         }
-      );
+    );
   }
 
   createFolder() {
