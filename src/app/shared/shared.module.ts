@@ -6,6 +6,7 @@ import { ClipboardModule } from 'ngx-clipboard/dist';
 import { SharedAuthenticationModule } from './authentication/authentication.module';
 import { FileIconPipe } from './file-icon.pipe';
 import { FileSizePipe } from './file-size.pipe';
+import { KeyboardService } from './keyboard.service';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { FileSizePipe } from './file-size.pipe';
     SharedAuthenticationModule,
   ],
   providers: [
+    KeyboardService,
   ],
   declarations: [
     FileSizePipe,

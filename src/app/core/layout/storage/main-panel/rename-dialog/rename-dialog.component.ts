@@ -1,5 +1,5 @@
 import { MdDialogRef } from '@angular/material';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MD_DIALOG_DATA } from '@angular/material';
 
 import { MainMenuComponent } from '../../main-menu/main-menu.component';
@@ -8,7 +8,7 @@ import { Folder } from '../../resources/folder';
 import {FileService} from '../../resources/file.service';
 import {FolderService} from '../../resources/folder.service';
 import {InfoDialogService} from '../../../info-dialog/info-dialog.service';
-import {resource} from 'selenium-webdriver/http';
+import { KeyboardService } from '../../../../../shared/keyboard.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ import {resource} from 'selenium-webdriver/http';
   templateUrl: './rename-dialog.component.html',
   styleUrls: ['./rename-dialog.component.scss'],
 })
-export class RenameDialogComponent implements OnInit {
+export class RenameDialogComponent implements OnInit, OnDestroy {
 
   public nameError: boolean;
 
@@ -25,11 +25,17 @@ export class RenameDialogComponent implements OnInit {
     private fileService: FileService,
     private folderService: FolderService,
     private infoDialogService: InfoDialogService,
+    private keyboardService: KeyboardService,
     @Inject(MD_DIALOG_DATA) public resource: any,
   ) {
   }
 
   ngOnInit(): void {
+    this.keyboardService.disableEnterEvt();
+  }
+
+  ngOnDestroy(): void {
+    this.keyboardService.enableEnterEvt();
   }
 
   save(name?: string) {
