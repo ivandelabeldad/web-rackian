@@ -14,6 +14,7 @@ import { MoveDialogComponent } from './move-dialog/move-dialog.component';
 import { User } from '../../../../shared/authentication/user';
 import { InfoDialogService } from '../../info-dialog/info-dialog.service';
 import { ShareService } from '../share/share.service';
+import {KeyboardService} from '../../../../shared/keyboard.service';
 
 
 @Component({
@@ -41,11 +42,12 @@ export class MainPanelComponent implements OnInit {
               private user: User,
               private infoDialogService: InfoDialogService,
               private shareService: ShareService,
-              private snackBar: MdSnackBar) {
+              private snackBar: MdSnackBar,
+              private keyboardService: KeyboardService) {
   }
 
   ngOnInit() {
-    this.initKeyboardDetection();
+    this.keyboardService.setComponent(this);
   }
 
   selectResource(resource: File | Folder) {
@@ -55,6 +57,8 @@ export class MainPanelComponent implements OnInit {
 
   changeFolder(folder: Folder) {
     this.router.navigate(['/storage/folder/' + folder.id]);
+    this.selectedResource = null;
+    this.onSelectResource.emit(this.selectedResource);
   }
 
   openFile(file: File) {
@@ -177,19 +181,6 @@ export class MainPanelComponent implements OnInit {
   openSnackBar(text: string) {
     this.snackBar.open(text, 'OK', {
       duration: 3000,
-    });
-  }
-
-  initKeyboardDetection() {
-    window.addEventListener('keydown', (evt) => {
-      if (evt.key === 'Enter' && this.selectedResource) {
-        if (this.selectedResource instanceof File) {
-          this.downloadFile(this.selectedResource);
-        }
-        if (this.selectedResource instanceof Folder) {
-          this.changeFolder(this.selectedResource);
-        }
-      }
     });
   }
 }

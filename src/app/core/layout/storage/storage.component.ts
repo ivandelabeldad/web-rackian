@@ -37,7 +37,15 @@ export class StorageComponent implements OnInit {
   }
 
   updateResources(folder?: Folder) {
-    this.folderService.getFolders(folder).subscribe(folders => this.folders = folders.sort(Folder.sortByName));
+    this.folders = [];
+    this.folderService.getFolders(folder).subscribe(
+      folders => {
+        this.folders.push(...folders);
+        this.folders = this.folders.sort(Folder.sortByName);
+      },
+      error => console.log(error),
+    );
+
     this.files = [];
     this.fileService.getFiles(folder).subscribe(
       files => {
