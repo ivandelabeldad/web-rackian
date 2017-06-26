@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ResponseContentType, Headers } from '@angular/http';
+import {Subject} from 'rxjs/Subject';
 
 import { Folder } from './folder';
 import { File } from './file';
@@ -13,20 +14,23 @@ export class FolderService {
 
   constructor(private http: AuthHttpService) { }
 
-  getFolders(folder?: Folder, url?: string): Observable<Folder[]> {
-    folder = folder || new Folder();
-    if (!folder.id) {
-      folder.id = '';
-    }
+  getFolders(folder: Folder = new Folder(), url?: string): Observable<Folder[]> {
+    const subject = new Subject();
+    this.getFoldersInPage(subject, folder, url);
+    return subject;
+  }
+
+  getFoldersInPage(subject: Subject<Folder[]>, folder?: Folder, url?: string): void {
     url = url || conf.url.api.folders + '?parent_folder=' + folder.id;
-    return this.http.get(url)
+    this.http.get(url)
       .map(res => res.json())
-      .mergeMap(data => {
+      .subscribe(data => {
+        const folders = data.results.map(element => Folder.createFromJson(element));
+        subject.next(folders);
         if (data.next) {
-          return this.getFolders(folder, data.next)
-            .map(resultsToJoin => [...data.results.map(e => Folder.createFromJson(e)), ...resultsToJoin]);
+          this.getFoldersInPage(subject, folder, data.next);
         } else {
-          return Observable.of(data.results.map(e => Folder.createFromJson(e)));
+          subject.complete();
         }
       });
   }
